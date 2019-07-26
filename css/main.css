@@ -1,4 +1,24 @@
+body
+{
+    margin: 0;
+    padding: 0;
+
+}
 .tiles
 {
     display: none;
+}
+
+canvas
+{
+    width: 100%;
+}
+
+@media screen and (min-width: 640px)
+{
+    canvas
+    {
+        width: 640px;
+    }
+
 }
