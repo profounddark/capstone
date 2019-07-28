@@ -2,6 +2,7 @@ let currentGame;
 
 
 
+
 class creature
 {
     constructor(startX, startY, number)
@@ -16,31 +17,26 @@ class levelMap
 {
     constructor()
     {
-        this.columns = 20;
-        this.rows = 20;
+        this.columns = 15;
+        this.rows = 15;
         this.tileSize = 16;
         this.tileMap =
         [
-            0, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 0,
-            5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4,
-            5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4,
-            5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4,
-            5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4,
-            5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4,
-            5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4,
-            5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4,
-            5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4,
-            5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4,
-            5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4,
-            5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4,
-            5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4,
-            5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4,
-            5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4,
-            5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4,
-            5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4,
-            5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4,
-            5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4,
-            0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0
+            -1,  8,  8,  8,  8,  9, 10,  7,  8,  8,  8,  8,  8,  8, -1,
+             6,  0,  0,  0,  0,  0, 10,  0,  0,  0,  0,  0,  0,  0,  5,
+             6,  0,  0,  0,  0,  0, 10,  0,  0,  0,  0,  0,  0,  0,  5,
+             6,  0,  0,  0,  0,  0, 16,  0,  0,  0,  0,  0,  0,  0,  5,
+             6,  0,  0,  0,  0,  0, 10,  0,  0,  0,  0,  0,  0,  0,  5,
+             6,  0,  0,  0,  0,  0, 10,  0,  0,  0,  0,  0,  0,  0,  5,
+             6,  0,  0,  0,  0,  0, 10,  0,  0,  0,  0,  0,  0,  0,  5,
+             6,  0,  0,  0,  0,  0, 15, 11, 13,  0,  0,  0,  0,  0,  5,
+             6,  0,  0,  0,  0,  0,  0,  0, 10,  0,  0,  0,  0,  0,  5,
+             6,  0,  0,  0,  0,  0,  0,  0, 10,  0,  0,  0,  0,  0,  5,
+             6,  0,  0,  0,  0,  0,  0,  0, 10,  0,  0,  0,  0,  0,  5,
+             6,  0,  0,  0,  0,  0,  0,  0, 16,  0,  0,  0,  0,  0,  5,
+             6,  0,  0,  0,  0,  0,  0,  0, 10,  0,  0,  0,  0,  0,  5,
+             6,  0,  0,  0,  0,  0,  0,  0, 10,  0,  0,  0,  0,  0,  5,
+            -1,  3,  3,  3,  3,  3,  3,  4, 10,  2,  3,  3,  3,  3, -1
         ]
 
         this.gameWindow = document.getElementById('gamemap').getContext('2d');
@@ -56,16 +52,21 @@ class levelMap
 
     drawTile(x, y)
     {
-        this.gameWindow.drawImage(
-            this.tileAtlas, // tilesheet
-            this.getTile(x, y) * this.tileSize, // source X
-            0, // source Y - zero for a horizontal strip sheet
-            this.tileSize, // source width
-            this.tileSize, // source height
-            x * this.tileSize, // target x
-            y * this.tileSize, // target y
-            this.tileSize, // target width
-            this.tileSize); // target height
+        let tempTile = this.getTile(x,y);
+        if (tempTile >= 0)
+        {
+            this.gameWindow.drawImage(
+                this.tileAtlas, // tilesheet
+                tempTile * this.tileSize, // source X
+                0, // source Y - zero for a horizontal strip sheet
+                this.tileSize, // source width
+                this.tileSize, // source height
+                x * this.tileSize, // target x
+                y * this.tileSize, // target y
+                this.tileSize, // target width
+                this.tileSize); // target height
+        }
+        
     }
 
     drawMap()
