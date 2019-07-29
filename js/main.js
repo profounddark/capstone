@@ -35,6 +35,9 @@ class levelMap
              6,  0,  0,  0,  0,  0,  0,  0, 10,  0,  0,  0,  0,  0,  5,
             -1,  3,  3,  3,  3,  3,  3,  4, 10,  2,  3,  3,  3,  3, -1
         ]
+        this.heroStart = { x:1, y:1};
+
+        this.theHero = new creature(this.heroStart.x, this.heroStart.y, 0);
 
         // This is temporary; it's a collision map of the tiles on the tilesheet
         this.collisionMap = [true, true, false, false, false,
@@ -110,11 +113,6 @@ class levelMap
     }
 }
 
-
-
-let theHero = new creature(2, 2, 0);
-
-
 function moveHero(hero, direction)
 {   
     let oldX = hero.posX;
@@ -137,7 +135,7 @@ function moveHero(hero, direction)
         hero.posX--;
     }
     currentGame.drawTile(oldX, oldY);
-    currentGame.drawCreature(theHero);
+    currentGame.drawCreature(currentGame.theHero);
 
 }
 
@@ -145,7 +143,8 @@ document.addEventListener("DOMContentLoaded", function(event)
     {            
         currentGame = new levelMap();
         currentGame.drawMap();
-        currentGame.drawCreature(theHero)
+
+        currentGame.drawCreature(currentGame.theHero)
 
         
     }
@@ -156,21 +155,21 @@ document.addEventListener("keydown", event =>{
     if (event.key == "ArrowUp" || event.key == "w")
     {
         event.preventDefault();
-        moveHero(theHero, "UP");
+        moveHero(currentGame.theHero, "UP");
     }
     else if (event.key == "ArrowDown" || event.key == "s")
     {
         event.preventDefault();
-        moveHero(theHero, "DOWN");
+        moveHero(currentGame.theHero, "DOWN");
     }
     else if (event.key == "ArrowRight" || event.key == "d")
     {
         event.preventDefault();
-        moveHero(theHero, "RIGHT");
+        moveHero(currentGame.theHero, "RIGHT");
     }
     else if (event.key == "ArrowLeft" || event.key == "a")
     {
         event.preventDefault();
-        moveHero(theHero, "LEFT");
+        moveHero(currentGame.theHero, "LEFT");
     }
 });

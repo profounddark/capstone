@@ -12,7 +12,7 @@ If the player reaches the exit, they will be moved to the next level (which, in 
 
 ## Current Status
 
-Displaying a single map is complete. On Desktop, the user can move the character about using the arrow keys or WASD. No collision has been implemented yet.
+Displaying a single map is complete. On Desktop, the user can move the character about using the arrow keys or WASD. There is basic tile collision based on tile type; this means that the player will be unable to enter spaces that are marked as impassible. In addition, they will be unable to walk off of the edges of the map.
 
 ### Upcoming Features (in development)
 * Tile Collision: The character will only be able to move into spaces of a certain type.
