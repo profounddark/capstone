@@ -1,8 +1,5 @@
 let currentGame;
 
-
-
-
 class creature
 {
     constructor(startX, startY, number)
@@ -39,6 +36,11 @@ class levelMap
             -1,  3,  3,  3,  3,  3,  3,  4, 10,  2,  3,  3,  3,  3, -1
         ]
 
+        // This is temporary; it's a collision map of the tiles on the tilesheet
+        this.collisionMap = [true, true, false, false, false,
+            false, false, false, false, false, false, false,
+            false, false, false, false, true, true];
+
         this.gameWindow = document.getElementById('gamemap').getContext('2d');
         this.tileAtlas = document.getElementById('tilesheet');
         this.creatureAtlas = document.getElementById('creaturesheet');
@@ -48,6 +50,18 @@ class levelMap
     getTile(col, row)
     {
         return this.tileMap[row * this.columns + col];
+    }
+
+    isPassible(x, y)
+    {
+        if ((x < 0) || (y < 0) || (x > this.columns) || (y > this.rows))
+        {
+            return false;
+        }
+        else
+        {
+            return this.collisionMap[this.getTile(x,y)];
+        }
     }
 
     drawTile(x, y)
@@ -106,19 +120,19 @@ function moveHero(hero, direction)
     let oldX = hero.posX;
     let oldY = hero.posY;
 
-    if (direction == "UP")
+    if ((direction == "UP") && (currentGame.isPassible(oldX, oldY-1)))
     {
         hero.posY--;
     }
-    else if (direction == "DOWN")
+    else if ((direction == "DOWN") && (currentGame.isPassible(oldX, oldY+1)))
     {
         hero.posY++;
     }
-    else if (direction == "RIGHT")
+    else if ((direction == "RIGHT") && (currentGame.isPassible(oldX+1, oldY)))
     {
         hero.posX++;
     }
-    else if (direction == "LEFT")
+    else if ((direction == "LEFT") && (currentGame.isPassible(oldX-1, oldY)))
     {
         hero.posX--;
     }
