@@ -20,19 +20,19 @@ class levelMap
         this.tileMap =
         [
             -1,  8,  8,  8,  8,  9, 10,  7,  8,  8,  8,  8,  8,  8, -1,
-             6,  0,  0,  0,  0,  0, 10,  0,  0,  0,  0,  0,  0,  0,  5,
-             6,  0,  0,  0,  0,  0, 10,  0,  0,  0,  0,  0,  0,  0,  5,
-             6,  0,  0,  0,  0,  0, 16,  0,  0,  0,  0,  0,  0,  0,  5,
-             6,  0,  0,  0,  0,  0, 10,  0,  0,  0,  0,  0,  0,  0,  5,
-             6,  0,  0,  0,  0,  0, 10,  0,  0,  0,  0,  0,  0,  0,  5,
-             6,  0,  0,  0,  0,  0, 10,  0,  0,  0,  0,  0,  0,  0,  5,
-             6,  0,  0,  0,  0,  0, 15, 11, 13,  0,  0,  0,  0,  0,  5,
-             6,  0,  0,  0,  0,  0,  0,  0, 10,  0,  0,  0,  0,  0,  5,
-             6,  0,  0,  0,  0,  0,  0,  0, 10,  0,  0,  0,  0,  0,  5,
-             6,  0,  0,  0,  0,  0,  0,  0, 10,  0,  0,  0,  0,  0,  5,
-             6,  0,  0,  0,  0,  0,  0,  0, 16,  0,  0,  0,  0,  0,  5,
-             6,  0,  0,  0,  0,  0,  0,  0, 10,  0,  0,  0,  0,  0,  5,
-             6,  0,  0,  0,  0,  0,  0,  0, 10,  0,  0,  0,  0,  0,  5,
+             6,  0,  0,  0,  0, 19, 10,  0,  0,  0,  0,  0,  0,  0,  5,
+             6,  0, 22,  0, 22,  0, 16,  0,  0,  0,  0,  0,  0,  0,  5,
+             6,  0,  0,  0, 20,  0, 10,  0,  0,  0,  0,  0,  0,  0,  5,
+             6,  0,  0, 19,  0,  0, 10,  0,  0,  0,  0,  0,  0,  0,  5,
+             6,  0, 22,  0,  0, 20, 10,  0,  0,  0,  0,  0,  0,  0,  5,
+             6,  0, 20,  0, 19,  0, 16,  0,  0,  0,  0,  0,  0,  0,  5,
+             6,  0, 19,  0, 20,  0, 15, 11, 13, 21, 22, 21, 22, 22,  5,
+             6,  0, 20,  0, 19,  0,  0,  0, 10,  1,  1,  1,  1,  1,  5,
+             6,  0, 22,  0,  0, 20, 19,  0, 16,  1, 21, 21, 21,  1,  5,
+             6,  0,  0,  0,  0,  0, 20, 19, 10, 22,  1,  1,  1,  1,  5,
+             6,  0,  0,  0, 19,  0,  0,  0, 10,  1,  1, 21,  1, 21,  5,
+             6, 22, 20,  0, 20, 19, 22,  0, 10,  1, 22, 22, 21, 18,  5,
+             6,  0,  0,  0,  0,  0,  0,  0, 10,  1,  1,  1,  1,  1,  5,
             -1,  3,  3,  3,  3,  3,  3,  4, 10,  2,  3,  3,  3,  3, -1
         ]
         this.heroStart = { x:1, y:1};
@@ -40,9 +40,14 @@ class levelMap
         this.theHero = new creature(this.heroStart.x, this.heroStart.y, 0);
 
         // This is temporary; it's a collision map of the tiles on the tilesheet
-        this.collisionMap = [true, true, false, false, false,
-            false, false, false, false, false, false, false,
-            false, false, false, false, true, true];
+        this.collisionMap =
+        [
+            true,
+            true, false, false, false, false,
+            false, false, false, false, false,
+            false, false, false, false, false,
+            true, true, true, false, false,
+            false, false];
 
         this.gameWindow = document.getElementById('gamemap').getContext('2d');
         this.tileAtlas = document.getElementById('tilesheet');
