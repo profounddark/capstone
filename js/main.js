@@ -35,10 +35,14 @@ class levelMap
              6,  0,  0,  0,  0,  0,  0,  0, 10,  1,  1,  1,  1,  1,  5,
             -1,  3,  3,  3,  3,  3,  3,  4, 10,  2,  3,  3,  3,  3, -1
         ]
-        this.heroStart = { x:1, y:1};
-
-        this.theHero = new creature(this.heroStart.x, this.heroStart.y, 0);
-
+        this.creatures = [ ];
+        this.creatures[0] = new creature(1, 1, 0);
+        this.creatures[1] = new creature(4, 1, 2);
+        this.creatures[2] = new creature(1, 13, 3);
+        this.creatures[3] = new creature(7, 12, 3);
+        this.creatures[4] = new creature(12, 11, 2);
+       
+        
         // This is temporary; it's a collision map of the tiles on the tilesheet
         this.collisionMap =
         [
@@ -140,7 +144,7 @@ function moveHero(hero, direction)
         hero.posX--;
     }
     currentGame.drawTile(oldX, oldY);
-    currentGame.drawCreature(currentGame.theHero);
+    currentGame.drawCreature(hero);
 
 }
 
@@ -149,7 +153,10 @@ document.addEventListener("DOMContentLoaded", function(event)
         currentGame = new levelMap();
         currentGame.drawMap();
 
-        currentGame.drawCreature(currentGame.theHero)
+        for (let count = 0; count <= currentGame.creatures.length; count++)
+        {
+            currentGame.drawCreature(currentGame.creatures[count]);
+        }
 
         
     }
@@ -160,21 +167,21 @@ document.addEventListener("keydown", event =>{
     if (event.key == "ArrowUp" || event.key == "w")
     {
         event.preventDefault();
-        moveHero(currentGame.theHero, "UP");
+        moveHero(currentGame.creatures[0], "UP");
     }
     else if (event.key == "ArrowDown" || event.key == "s")
     {
         event.preventDefault();
-        moveHero(currentGame.theHero, "DOWN");
+        moveHero(currentGame.creatures[0], "DOWN");
     }
     else if (event.key == "ArrowRight" || event.key == "d")
     {
         event.preventDefault();
-        moveHero(currentGame.theHero, "RIGHT");
+        moveHero(currentGame.creatures[0], "RIGHT");
     }
     else if (event.key == "ArrowLeft" || event.key == "a")
     {
         event.preventDefault();
-        moveHero(currentGame.theHero, "LEFT");
+        moveHero(currentGame.creatures[0], "LEFT");
     }
 });
