@@ -1,6 +1,6 @@
 let currentGame;
 
-class creature
+class critter
 {
     constructor(startX, startY, number, type, value)
     {
@@ -61,14 +61,22 @@ class levelMap
              6,  0,  0,  0,  0,  0,  0,  0, 10,  1,  1,  1,  1,  1,  5,
             -1,  3,  3,  3,  3,  3,  3,  4, 10,  2,  3,  3,  3,  3, -1
         ]
-        this.creatures = [ ];
-        this.creatures[0] = new creature(1, 1, 0, 'player', null);
-        this.creatures[1] = new creature(4, 1, 2, 'treasure', 100);
-        this.creatures[2] = new creature(1, 13, 3, 'treasure', 500);
-        this.creatures[3] = new creature(7, 12, 3, 'treasure', 500);
-        this.creatures[4] = new creature(12, 11, 2, 'treasure', 100);
-        this.creatures[5] = new creature(12, 2, 5, 'monster', 50);
-       
+        this.critters = [ ];
+        this.critters[0] = new critter(1, 1, 0, 'player', null);
+        this.critters[1] = new critter(4, 1, 2, 'treasure', 100);
+        this.critters[2] = new critter(1, 13, 3, 'treasure', 500);
+        this.critters[3] = new critter(7, 12, 3, 'treasure', 500);
+        this.critters[4] = new critter(12, 11, 2, 'treasure', 100);
+        this.critters[5] = new critter(13, 2, 4, 'treasure', 1000);
+        this.critters[6] = new critter(12, 2, 5, 'monster', 50);
+        this.critters[7] = new critter(11, 3, 5, 'monster', 50);
+
+
+
+        // this is so I have a way to always reference the Player, if needed
+        this.thePlayer = this.critters[0];
+        
+       this.turnCount = 0;
         
         // This is temporary; it's a collision map of the tiles on the tilesheet
         this.collisionMap =
@@ -82,7 +90,7 @@ class levelMap
 
         this.gameWindow = document.getElementById('gamemap').getContext('2d');
         this.tileAtlas = document.getElementById('tilesheet');
-        this.creatureAtlas = document.getElementById('creaturesheet');
+        this.critterAtlas = document.getElementById('crittersheet');
 
     }
 
@@ -122,6 +130,21 @@ class levelMap
         
     }
 
+    drawCritter(theCritter)
+    {
+        this.gameWindow.drawImage(
+            this.critterAtlas,
+            theCritter.imageNumber * this.tileSize,
+            0,
+            this.tileSize,
+            this.tileSize,
+            theCritter.posX * this.tileSize,
+            theCritter.posY * this.tileSize,
+            this.tileSize,
+            this.tileSize);
+        
+    }
+
     drawMap()
     {
         for (let col = 0; col < this.columns; col++)
@@ -131,56 +154,90 @@ class levelMap
                 this.drawTile(col, row);
             }
         }
+
+        for (let count = 0; count < this.critters.length; count++)
+        {
+            this.drawCritter(this.critters[count]);
+        }
     }
 
-    drawCreature(theCreature)
+
+}
+
+function getRandomDirection()
+{
+    let numb = Math.floor(Math.random() * 4);
+    switch (numb)
     {
-        this.gameWindow.drawImage(
-            this.creatureAtlas,
-            theCreature.imageNumber * this.tileSize,
-            0,
-            this.tileSize,
-            this.tileSize,
-            theCreature.posX * this.tileSize,
-            theCreature.posY * this.tileSize,
-            this.tileSize,
-            this.tileSize);
-        
+        case 0: return 'N';
+        case 1: return 'E';
+        case 2: return 'S';
+        case 3: return 'W';
+    }
+}
+
+function moveCritter(direction, theCritter)
+{
+    if ((direction == "N") && (currentGame.isPassible(theCritter.posX, theCritter.posY - 1))) {
+        theCritter.posY--;
+    }
+    else if ((direction == "S") && (currentGame.isPassible(theCritter.posX, theCritter.posY + 1))) {
+        theCritter.posY++;
+    }
+    else if ((direction == "E") && (currentGame.isPassible(theCritter.posX + 1, theCritter.posY))) {
+        theCritter.posX++;
+    }
+    else if ((direction == "W") && (currentGame.isPassible(theCritter.posX - 1, theCritter.posY))) {
+        theCritter.posX--;
     }
 }
 
 function processTurn(direction)
 {   
-    let oldX = currentGame.creatures[0].posX;
-    let oldY = currentGame.creatures[0].posY;
-/*
-    for (count = 0; count < currentGame.creatures.length; count++)
+    let repaintTiles = [];
+    let killCritters = [];
+    for (let count = 0; count < currentGame.critters.length; count++)
     {
-        switch(currentGame.creatures[count].getType())
+        if (currentGame.critters[count].getType() == 'PLAYER')
         {
-            case 'PLAYER':
-            case ''
+            repaintTiles.push({x:currentGame.critters[count].posX, y:currentGame.critters[count].posY});
+            moveCritter(direction, currentGame.critters[count]);
         }
+
+        if ((currentGame.critters[count].getType() == 'MONSTER') && ((currentGame.turnCount % 2) == 0))
+        {
+            repaintTiles.push({x:currentGame.critters[count].posX, y: currentGame.critters[count].posY});
+            moveCritter(getRandomDirection(), currentGame.critters[count]);
+        }
+
+        if (currentGame.critters[count].getType() == 'TREASURE')
+        {
+            if ((currentGame.critters[count].posX == currentGame.thePlayer.posX) && (currentGame.critters[count].posY == currentGame.thePlayer.posY))
+            {
+                repaintTiles.push({x: currentGame.critters[count].posX, y: currentGame.critters[count].posY});
+                killCritters.push(count);
+
+            }
+        }
+
     }
-*/
-    if ((direction == "UP") && (currentGame.isPassible(oldX, oldY-1)))
+
+    // remove all killed critters, starting at back
+    for (let cWipe = (killCritters.length - 1); cWipe >= 0; cWipe--)
     {
-        currentGame.creatures[0].posY--;
+        currentGame.critters.splice(killCritters[cWipe], 1);
     }
-    else if ((direction == "DOWN") && (currentGame.isPassible(oldX, oldY+1)))
-    {
-        currentGame.creatures[0].posY++;
-    }
-    else if ((direction == "RIGHT") && (currentGame.isPassible(oldX+1, oldY)))
-    {
-        currentGame.creatures[0].posX++;
-    }
-    else if ((direction == "LEFT") && (currentGame.isPassible(oldX-1, oldY)))
-    {
-        currentGame.creatures[0].posX--;
-    }
-    currentGame.drawTile(oldX, oldY);
-    currentGame.drawCreature(currentGame.creatures[0]);
+    
+    // this repaints the all of the tiles needed to be repainted
+    repaintTiles.forEach(function(item){
+        currentGame.drawTile(item.x, item.y);
+    });
+    currentGame.critters.forEach(function(element){
+        currentGame.drawCritter(element);
+    });
+    
+    //increment the turn counter
+    currentGame.turnCount++;    
 
 }
 
@@ -188,38 +245,31 @@ document.addEventListener("DOMContentLoaded", function(event)
     {            
         currentGame = new levelMap();
         currentGame.drawMap();
-
-        for (let count = 0; count < currentGame.creatures.length; count++)
-        {
-            console.log('drawing creature ' + count);
-            currentGame.drawCreature(currentGame.creatures[count]);
-            
-        }
-
         
     }
 );
 
 document.addEventListener("keydown", event =>{
-    console.log(event.key);
     if (event.key == "ArrowUp" || event.key == "w")
     {
         event.preventDefault();
-        processTurn("UP");
+        processTurn("N");
     }
     else if (event.key == "ArrowDown" || event.key == "s")
     {
         event.preventDefault();
-        processTurn("DOWN");
+        processTurn("S");
     }
     else if (event.key == "ArrowRight" || event.key == "d")
     {
         event.preventDefault();
-        processTurn("RIGHT");
+        processTurn("E");
     }
     else if (event.key == "ArrowLeft" || event.key == "a")
     {
         event.preventDefault();
-        processTurn("LEFT");
+        processTurn("W");
     }
 });
+
+
