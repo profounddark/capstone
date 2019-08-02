@@ -2,11 +2,37 @@ let currentGame;
 
 class creature
 {
-    constructor(startX, startY, number)
+    constructor(startX, startY, number, type, value)
     {
         this.posX = startX;
         this.posY = startY;
         this.imageNumber = number;
+        switch (type.toUpperCase())
+        {
+        case 'PLAYER':
+            this.cType = 0;
+            break;
+        case 'TREASURE':
+            this.cType = 1;
+            this.iValue = value;
+            break;
+        case 'MONSTER':
+            this.cType = 2;
+            break;
+        default:
+            console.log('unknown type');
+        }
+        
+    }
+
+    getType()
+    {
+        switch(this.cType)
+        {
+        case 0: return('PLAYER');
+        case 1: return('TREASURE');
+        case 2: return('MONSTER');
+        }
     }
 }
 
@@ -36,11 +62,12 @@ class levelMap
             -1,  3,  3,  3,  3,  3,  3,  4, 10,  2,  3,  3,  3,  3, -1
         ]
         this.creatures = [ ];
-        this.creatures[0] = new creature(1, 1, 0);
-        this.creatures[1] = new creature(4, 1, 2);
-        this.creatures[2] = new creature(1, 13, 3);
-        this.creatures[3] = new creature(7, 12, 3);
-        this.creatures[4] = new creature(12, 11, 2);
+        this.creatures[0] = new creature(1, 1, 0, 'player', null);
+        this.creatures[1] = new creature(4, 1, 2, 'treasure', 100);
+        this.creatures[2] = new creature(1, 13, 3, 'treasure', 500);
+        this.creatures[3] = new creature(7, 12, 3, 'treasure', 500);
+        this.creatures[4] = new creature(12, 11, 2, 'treasure', 100);
+        this.creatures[5] = new creature(12, 2, 5, 'monster', 50);
        
         
         // This is temporary; it's a collision map of the tiles on the tilesheet
@@ -122,29 +149,38 @@ class levelMap
     }
 }
 
-function moveHero(hero, direction)
+function processTurn(direction)
 {   
-    let oldX = hero.posX;
-    let oldY = hero.posY;
-
+    let oldX = currentGame.creatures[0].posX;
+    let oldY = currentGame.creatures[0].posY;
+/*
+    for (count = 0; count < currentGame.creatures.length; count++)
+    {
+        switch(currentGame.creatures[count].getType())
+        {
+            case 'PLAYER':
+            case ''
+        }
+    }
+*/
     if ((direction == "UP") && (currentGame.isPassible(oldX, oldY-1)))
     {
-        hero.posY--;
+        currentGame.creatures[0].posY--;
     }
     else if ((direction == "DOWN") && (currentGame.isPassible(oldX, oldY+1)))
     {
-        hero.posY++;
+        currentGame.creatures[0].posY++;
     }
     else if ((direction == "RIGHT") && (currentGame.isPassible(oldX+1, oldY)))
     {
-        hero.posX++;
+        currentGame.creatures[0].posX++;
     }
     else if ((direction == "LEFT") && (currentGame.isPassible(oldX-1, oldY)))
     {
-        hero.posX--;
+        currentGame.creatures[0].posX--;
     }
     currentGame.drawTile(oldX, oldY);
-    currentGame.drawCreature(hero);
+    currentGame.drawCreature(currentGame.creatures[0]);
 
 }
 
@@ -153,9 +189,11 @@ document.addEventListener("DOMContentLoaded", function(event)
         currentGame = new levelMap();
         currentGame.drawMap();
 
-        for (let count = 0; count <= currentGame.creatures.length; count++)
+        for (let count = 0; count < currentGame.creatures.length; count++)
         {
+            console.log('drawing creature ' + count);
             currentGame.drawCreature(currentGame.creatures[count]);
+            
         }
 
         
@@ -167,21 +205,21 @@ document.addEventListener("keydown", event =>{
     if (event.key == "ArrowUp" || event.key == "w")
     {
         event.preventDefault();
-        moveHero(currentGame.creatures[0], "UP");
+        processTurn("UP");
     }
     else if (event.key == "ArrowDown" || event.key == "s")
     {
         event.preventDefault();
-        moveHero(currentGame.creatures[0], "DOWN");
+        processTurn("DOWN");
     }
     else if (event.key == "ArrowRight" || event.key == "d")
     {
         event.preventDefault();
-        moveHero(currentGame.creatures[0], "RIGHT");
+        processTurn("RIGHT");
     }
     else if (event.key == "ArrowLeft" || event.key == "a")
     {
         event.preventDefault();
-        moveHero(currentGame.creatures[0], "LEFT");
+        processTurn("LEFT");
     }
 });
