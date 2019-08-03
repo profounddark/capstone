@@ -3,8 +3,21 @@ body
     background-color: black;
     margin: 0;
     padding: 0;
+    color: white;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 12px;
 
 }
+
+
+.statbox
+{
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    padding: 0 .5rem;
+}
+
 .tiles
 {
     display: none;
@@ -23,14 +36,55 @@ canvas
 .mobilecontrol
 {
     color: white;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-areas:
+        "up up"
+        "left right"
+        "down down";
 }
+
+.mobilecontrol button
+{
+    color:white;
+    font-size: 1.5rem;
+    text-align: center;
+    justify-self: center;
+}
+
+.up
+{
+    grid-area: up;
+}
+.left
+{
+    grid-area: left;
+}
+.right
+{
+    grid-area: right;
+}
+.down
+{
+    grid-area: down;
+}
+
+
+
 
 
 @media screen and (min-width: 640px)
 {
+    .statbox
+    {
+        flex-flow: column nowrap;
+        justify-content: flex-start;
+    }
+
     .main-wrapper
     {
-        flex-flow: row nowrap;
+        flex-flow: row-reverse nowrap;
         justify-content: center;
     }
     canvas

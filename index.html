@@ -12,16 +12,25 @@
                 <meta name="og:type" content="website">
                 <meta name="og:image" content="https://profounddark.games/capstone/og_image.png">
                 <meta name="og:url" content="http://profounddark.games/capstone">
+
+                <link href="https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap" rel="stylesheet">
         
             </head>
     <body>
         <script src="./js/main.js"></script>
         <div class="main-wrapper">
+            <div class="statbox">
+                <p>Score: 000000</p>
+                <p>Energy: 0000</p>
+            </div>
             <canvas id="gamemap" width="240" height="240"></canvas>
         </div>
 
         <div class="mobilecontrol">
-            <p>Mobile controls go here!</p>
+            <button class="up" onmousedown="processTurn('N')">UP</button>
+            <button class="left" onmousedown="processTurn('W')">LEFT</button>
+            <button class="right" onmousedown="processTurn('E')">RIGHT</button>
+            <button class="down" onmousedown="processTurn('S')">DOWN</button>
         </div>
 
         <img class="tiles" id="tilesheet" src="./tiles/tilesheet.png">
