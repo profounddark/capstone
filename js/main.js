@@ -242,7 +242,7 @@ function processTurn(direction)
 }
 
 document.addEventListener("DOMContentLoaded", function(event)
-    {            
+    {           
         currentGame = new levelMap();
         currentGame.drawMap();
         
