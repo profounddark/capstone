@@ -1,4 +1,36 @@
-let currentGame;
+let currentLevel;
+let mainGame;
+
+
+class gameState
+{
+    constructor(startScore = 0, startEnergy = 500)
+    {
+        this.playerScore = startScore;
+        this.playerEnergy = startEnergy;
+
+        this.scoreTracker = document.getElementById('scoretracker');
+        this.energyTracker = document.getElementById('energytracker');
+
+        this.updateScore(0);
+        this.updateEnergy(0);
+    }
+
+    updateScore(amount = 0)
+    {
+        this.playerScore = this.playerScore + amount;
+        let scoreStr = this.playerScore.toString();
+        this.scoreTracker.innerHTML = scoreStr.padStart(5, '0');
+    }
+
+    updateEnergy(amount = -1)
+    {
+        this.playerEnergy = this.playerEnergy + amount;
+        let energyStr = this.playerEnergy.toString();
+        this.energyTracker.innerHTML = energyStr.padStart(4, '0');
+    }
+
+}
 
 class critter
 {
@@ -14,7 +46,7 @@ class critter
             break;
         case 'TREASURE':
             this.cType = 1;
-            this.iValue = value;
+            this.pointValue = value;
             break;
         case 'MONSTER':
             this.cType = 2;
@@ -178,16 +210,16 @@ function getRandomDirection()
 
 function moveCritter(direction, theCritter)
 {
-    if ((direction == "N") && (currentGame.isPassible(theCritter.posX, theCritter.posY - 1))) {
+    if ((direction == "N") && (currentLevel.isPassible(theCritter.posX, theCritter.posY - 1))) {
         theCritter.posY--;
     }
-    else if ((direction == "S") && (currentGame.isPassible(theCritter.posX, theCritter.posY + 1))) {
+    else if ((direction == "S") && (currentLevel.isPassible(theCritter.posX, theCritter.posY + 1))) {
         theCritter.posY++;
     }
-    else if ((direction == "E") && (currentGame.isPassible(theCritter.posX + 1, theCritter.posY))) {
+    else if ((direction == "E") && (currentLevel.isPassible(theCritter.posX + 1, theCritter.posY))) {
         theCritter.posX++;
     }
-    else if ((direction == "W") && (currentGame.isPassible(theCritter.posX - 1, theCritter.posY))) {
+    else if ((direction == "W") && (currentLevel.isPassible(theCritter.posX - 1, theCritter.posY))) {
         theCritter.posX--;
     }
 }
@@ -196,27 +228,28 @@ function processTurn(direction)
 {   
     let repaintTiles = [];
     let killCritters = [];
-    for (let count = 0; count < currentGame.critters.length; count++)
+    for (let count = 0; count < currentLevel.critters.length; count++)
     {
-        if (currentGame.critters[count].getType() == 'PLAYER')
+        if (currentLevel.critters[count].getType() == 'PLAYER')
         {
-            repaintTiles.push({x:currentGame.critters[count].posX, y:currentGame.critters[count].posY});
-            moveCritter(direction, currentGame.critters[count]);
+            repaintTiles.push({x:currentLevel.critters[count].posX, y:currentLevel.critters[count].posY});
+            moveCritter(direction, currentLevel.critters[count]);
+            mainGame.updateEnergy();
         }
 
-        if ((currentGame.critters[count].getType() == 'MONSTER') && ((currentGame.turnCount % 2) == 0))
+        if ((currentLevel.critters[count].getType() == 'MONSTER') && ((currentLevel.turnCount % 2) == 0))
         {
-            repaintTiles.push({x:currentGame.critters[count].posX, y: currentGame.critters[count].posY});
-            moveCritter(getRandomDirection(), currentGame.critters[count]);
+            repaintTiles.push({x:currentLevel.critters[count].posX, y: currentLevel.critters[count].posY});
+            moveCritter(getRandomDirection(), currentLevel.critters[count]);
         }
 
-        if (currentGame.critters[count].getType() == 'TREASURE')
+        if (currentLevel.critters[count].getType() == 'TREASURE')
         {
-            if ((currentGame.critters[count].posX == currentGame.thePlayer.posX) && (currentGame.critters[count].posY == currentGame.thePlayer.posY))
+            if ((currentLevel.critters[count].posX == currentLevel.thePlayer.posX) && (currentLevel.critters[count].posY == currentLevel.thePlayer.posY))
             {
-                repaintTiles.push({x: currentGame.critters[count].posX, y: currentGame.critters[count].posY});
+                repaintTiles.push({x: currentLevel.critters[count].posX, y: currentLevel.critters[count].posY});
                 killCritters.push(count);
-
+                mainGame.updateScore(currentLevel.critters[count].pointValue);
             }
         }
 
@@ -225,26 +258,27 @@ function processTurn(direction)
     // remove all killed critters, starting at back
     for (let cWipe = (killCritters.length - 1); cWipe >= 0; cWipe--)
     {
-        currentGame.critters.splice(killCritters[cWipe], 1);
+        currentLevel.critters.splice(killCritters[cWipe], 1);
     }
     
     // this repaints the all of the tiles needed to be repainted
     repaintTiles.forEach(function(item){
-        currentGame.drawTile(item.x, item.y);
+        currentLevel.drawTile(item.x, item.y);
     });
-    currentGame.critters.forEach(function(element){
-        currentGame.drawCritter(element);
+    currentLevel.critters.forEach(function(element){
+        currentLevel.drawCritter(element);
     });
     
     //increment the turn counter
-    currentGame.turnCount++;    
+    currentLevel.turnCount++;    
 
 }
 
 document.addEventListener("DOMContentLoaded", function(event)
     {
-        currentGame = new levelMap();
-        currentGame.drawMap();
+        mainGame = new gameState();
+        currentLevel = new levelMap();
+        currentLevel.drawMap();
         
     }
 );
