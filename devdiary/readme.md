@@ -12,3 +12,14 @@ Completed this week:
 * Basic implementation of canvas to display tilemap.
 * Basic player control/movement (desktop only).
 * Basic collision detection with specific terrain types.
+
+## August 4, 2019 - The Second Week of Development
+This week saw a continuation of the previous week with a variety of new, exciting features. This release added mobile controls, score tracking, an expanded map, along with actual treasures and monsters to encounter. The full entry can be found [here](./part02.md).
+
+![Image of the Second Screenshot](./image/pt2_screenshot.png)
+
+Completed this week:
+* Basic mobile player control/movement
+* Additional tile types, expanded map
+* Monsters and Treasures!
+* Score and Energy tracking

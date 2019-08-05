@@ -107,8 +107,6 @@ class levelMap
         this.critters[6] = new critter(12, 2, 5, 'monster', 50);
         this.critters[7] = new critter(11, 3, 5, 'monster', 50);
 
-
-
         // this is so I have a way to always reference the Player, if needed
         this.thePlayer = this.critters[0];
         
