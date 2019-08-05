@@ -28,6 +28,10 @@ class gameState
         this.playerEnergy = this.playerEnergy + amount;
         let energyStr = this.playerEnergy.toString();
         this.energyTracker.innerHTML = energyStr.padStart(4, '0');
+        if (this.playerEnergy == 0)
+        {
+            console.log('throw end of game event');
+        }
     }
 
 }
