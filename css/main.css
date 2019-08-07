@@ -96,8 +96,15 @@ canvas
     {
         width: 640px;
     }
+
+}
+
+@media (pointer: fine)
+{
+    
     .mobilecontrol
     {
         display:none;
     }
+
 }

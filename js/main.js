@@ -1,4 +1,3 @@
-import Critter from './critter.js';
 import LevelMap from './levelmap.js';
 
 let currentLevel;
