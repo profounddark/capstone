@@ -39,10 +39,6 @@ class GameState
 
 }
 
-
-
-
-
 function getRandomDirection()
 {
     let numb = Math.floor(Math.random() * 4);
@@ -107,12 +103,34 @@ function processTurn(direction)
 
 document.addEventListener("DOMContentLoaded", function(event)
     {
+        // I really need a better way of doing this. Consider this a kludge
+        document.getElementById('up').addEventListener("mousedown", function(event)
+        {
+            processTurn('N');
+        });
+        document.getElementById('right').addEventListener("mousedown", function(event)
+        {
+            processTurn('E');
+        });
+        document.getElementById('down').addEventListener("mousedown", function(event)
+        {
+            processTurn('S');
+        });
+        document.getElementById('left').addEventListener("mousedown", function(event)
+        {
+            processTurn('W');
+        });
+
+
         mainGame = new GameState();
         currentLevel = new LevelMap();
         currentLevel.drawMap();
+    
+
         
     }
 );
+
 
 document.addEventListener("keydown", event =>{
     if (event.key == "ArrowUp" || event.key == "w")
