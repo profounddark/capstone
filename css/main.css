@@ -52,6 +52,33 @@ body
     justify-content: space-between;
     padding: 0 .5rem;
 }
+.infobox
+{
+    display: flex;
+    flex-flow: column-reverse wrap;
+    justify-content: flex-end;
+
+}
+
+.infobox p
+{
+    display:none;
+    font-size: .75rem;
+}
+
+.infobox p:last-child
+{ 
+    display: block;
+    font-size: .85rem;
+}
+
+@keyframes greentext
+{
+    0%      {color: white;}
+    50%     {color: green;}
+    100%    {color: white;}
+}
+
 
 .tiles
 {
@@ -123,6 +150,11 @@ canvas
     {
         flex-flow: row nowrap;
         justify-content: center;
+    }
+
+    .infobox p
+    {
+        display: block;
     }
     
     canvas

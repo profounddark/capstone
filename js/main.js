@@ -13,7 +13,7 @@ class GameState
 
         this.scoreTracker = document.getElementById('scoretracker');
         this.energyTracker = document.getElementById('energytracker');
-
+        this.infoTracker = document.getElementById('infotracker');
         this.updateScore(0);
         this.updateEnergy(0);
     }
@@ -36,6 +36,20 @@ class GameState
         }
     }
 
+    updateInfo(infoString)
+    {
+        console.log(this.infoTracker.childElementCount);
+        console.log(this.infoTracker.childNodes);
+
+        if (this.infoTracker.childElementCount == 10)
+        {
+            this.infoTracker.removeChild(this.infoTracker.childNodes[0]);
+        }
+        let newText = document.createElement('p');
+        newText.innerHTML = infoString;
+        this.infoTracker.appendChild(newText);
+    }
+
 }
 
 function getRandomDirection()
@@ -55,6 +69,7 @@ function processTurn(direction)
     let repaintTiles = [];
     let killCritters = [];
     let nextLevel = null;
+
     for (let count = 0; count < currentLevel.critters.length; count++)
     {
         if (currentLevel.critters[count].type == 'PLAYER')
@@ -69,6 +84,7 @@ function processTurn(direction)
             if (currentLevel.critters[count].isAdjacent(currentLevel.thePlayer))
             {
                 mainGame.updateEnergy(-currentLevel.critters[count].damage);
+                mainGame.updateInfo("The monster took " + currentLevel.critters[count].damage + " energy from you!");
             }
             else
             {
@@ -82,6 +98,7 @@ function processTurn(direction)
             repaintTiles.push({x: currentLevel.critters[count].X, y: currentLevel.critters[count].Y});
             killCritters.push(count);
             mainGame.updateScore(currentLevel.critters[count].points);
+            mainGame.updateInfo("You got a treasure worth " + currentLevel.critters[count].points + " points!");
         }
 
         if (currentLevel.critters[count].type == 'EXIT')
@@ -90,6 +107,7 @@ function processTurn(direction)
             {
                 console.log('Instance new map: ' + currentLevel.critters[count].destination);
                 nextLevel = currentLevel.critters[count].destination;
+                mainGame.updateInfo("Moving to new level: " + nextLevel + "!");
             }
         }
 
@@ -111,6 +129,8 @@ function processTurn(direction)
     
     //increment the turn counter
     currentLevel.turnCount++; 
+
+
 
     if (nextLevel)
     {
@@ -190,6 +210,7 @@ document.addEventListener("DOMContentLoaded", function(event)
             levelScreen.classList.add('active');
 
             mainGame = new GameState();
+            mainGame.updateInfo('Welcome to Capstone Adventure!');
             setGameControls();
             loadLevel('level01');
 
