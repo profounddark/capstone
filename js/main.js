@@ -100,8 +100,11 @@ function processTurn(direction)
 
 }
 
+
+
 document.addEventListener("DOMContentLoaded", function(event)
     {
+        
         // I really need a better way of doing this. Consider this a kludge
         document.getElementById('up').addEventListener("mousedown", function(event)
         {
@@ -118,6 +121,17 @@ document.addEventListener("DOMContentLoaded", function(event)
         document.getElementById('left').addEventListener("mousedown", function(event)
         {
             processTurn('W');
+        });
+
+        document.getElementById('startbutton').addEventListener("mousedown", function(event)
+        {
+            let titleScreen = document.getElementById('titlescreen');
+            titleScreen.classList.remove('active');
+            titleScreen.classList.add('inactive');
+            
+            let levelScreen = document.getElementById('levelscreen');
+            levelScreen.classList.remove('inactive');
+            levelScreen.classList.add('active');
         });
 
 

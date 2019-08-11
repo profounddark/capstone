@@ -23,29 +23,32 @@
     <body>
         <script type="module" src="./js/main.js"></script>
         
-        <div class="titlescreen">
-            Welcome to the game!
+        <div class="start screen active" id="titlescreen">
+            <h1>Capstone! Adventure</h1>
+            <button class="start" id="startbutton">Start Game</button>
+            <p>More exciting text!</p>
         </div>
         
-        <div class="gameover">
+        <div class="gameover inactive">
 
         </div>
 
 
-        <div class="main-wrapper">
-            <div class="statbox">
-                <p>Score: <span class="score" id="scoretracker">00ppo0</span></p>
-                <p>Energy: <span class="energy" id="energytracker">0100</span></p>
-            </div>
-            <canvas id="gamemap" width="240" height="240"></canvas>
-            <div class="mobilecontrol">
-                <button class="up" id="up">UP</button>
-                <button class="left" id="left">LEFT</button>
-                <button class="right" id="right">RIGHT</button>
-                <button class="down" id="down">DOWN</button>
+        <div class="level screen inactive" id="levelscreen">
+            <div class="main">
+                <div class="statbox">
+                    <p>Score: <span class="score" id="scoretracker">00ppo0</span></p>
+                    <p>Energy: <span class="energy" id="energytracker">0100</span></p>
+                </div>
+                <canvas id="gamemap" width="240" height="240"></canvas>
+                <div class="mobilecontrol">
+                    <button class="up" id="up">UP</button>
+                    <button class="left" id="left">LEFT</button>
+                    <button class="right" id="right">RIGHT</button>
+                    <button class="down" id="down">DOWN</button>
+                </div>
             </div>
         </div>
-
 
 
         <img class="tiles" id="tilesheet" src="./tiles/tilesheet.png">

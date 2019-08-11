@@ -38,7 +38,7 @@ export default class LevelMap
         // this is so I have a way to always reference the Player, if needed
         this.thePlayer = this.critters[0];
         
-       this.turnCount = 0;
+        this.turnCount = 0;
         
         // This is temporary; it's a collision map of the tiles on the tilesheet
         this.collisionMap =

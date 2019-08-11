@@ -9,10 +9,41 @@ body
 
 }
 
-.titlescreen
+.start
+{
+    text-align: center;
+}
+
+.start button
+{
+    background-color: black;
+    color: white;
+    border-color: white;
+    font-size: 2rem;
+}
+
+.start button:hover
+{
+    color:black;
+    background-color: white;
+    border-color: black;
+}
+
+.screen
+{
+
+}
+
+.inactive
 {
     display: none;
 }
+
+.active
+{
+    display: block;
+}
+
 
 .statbox
 {
@@ -31,7 +62,7 @@ canvas
 {
     width: 100%;
 }
-.main-wrapper
+.main
 {
     display: flex;
     flex-flow: column nowrap;
@@ -87,7 +118,7 @@ canvas
         justify-content: flex-start;
     }
 
-    .main-wrapper
+    .main
     {
         flex-flow: row-reverse nowrap;
         justify-content: center;
@@ -108,3 +139,5 @@ canvas
     }
 
 }
+
+
