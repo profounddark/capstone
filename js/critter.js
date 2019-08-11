@@ -1,7 +1,5 @@
 class Critter
 {
-    posX
-    posY
     constructor(startX, startY, imageNumb)
     {
         this.posX = startX;
@@ -101,7 +99,6 @@ class Monster extends Critter
 
 class Exit extends Critter
 {
-    targetMap
     constructor(startX, startY, imageNumb, destMap)
     {
         super(startX, startY, imageNumb);
