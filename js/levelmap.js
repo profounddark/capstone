@@ -1,4 +1,4 @@
-import Critter from './critter.js';
+import {Critter, Player, Treasure, Monster} from './critter.js';
 
 export default class LevelMap
 {
@@ -26,14 +26,14 @@ export default class LevelMap
             -1,  3,  3,  3,  3,  3,  3,  4, 10,  2,  3,  3,  3,  3, -1
         ]
         this.critters = [ ];
-        this.critters[0] = new Critter(1, 1, 0, 'player', null);
-        this.critters[1] = new Critter(4, 1, 2, 'treasure', 100);
-        this.critters[2] = new Critter(1, 13, 3, 'treasure', 500);
-        this.critters[3] = new Critter(7, 12, 3, 'treasure', 500);
-        this.critters[4] = new Critter(12, 11, 2, 'treasure', 100);
-        this.critters[5] = new Critter(13, 2, 4, 'treasure', 1000);
-        this.critters[6] = new Critter(12, 2, 5, 'monster', 50);
-        this.critters[7] = new Critter(11, 3, 5, 'monster', 50);
+        this.critters[0] = new Player(1, 1, 0);
+        this.critters[1] = new Treasure(4, 1, 2, 100);
+        this.critters[2] = new Treasure(1, 13, 3, 500);
+        this.critters[3] = new Treasure(7, 12, 3, 500);
+        this.critters[4] = new Treasure(12, 11, 2, 100);
+        this.critters[5] = new Treasure(13, 2, 4, 1000);
+        this.critters[6] = new Monster(12, 2, 5);
+        this.critters[7] = new Monster(11, 3, 5);
 
         // this is so I have a way to always reference the Player, if needed
         this.thePlayer = this.critters[0];
