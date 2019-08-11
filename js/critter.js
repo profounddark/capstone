@@ -1,11 +1,11 @@
 class Critter
 {
-    #posX
-    #posY
+    posX
+    posY
     constructor(startX, startY, imageNumb)
     {
-        this.#posX = startX;
-        this.#posY = startY;
+        this.posX = startX;
+        this.posY = startY;
         this.imageNumber = imageNumb;
     }
 
@@ -16,31 +16,31 @@ class Critter
 
     get X()
     {
-        return this.#posX;
+        return this.posX;
     }
 
     get Y()
     {
-        return this.#posY;
+        return this.posY;
     }
 
     moveCritter(direction, level)
     {
-        if ((direction == "N") && (level.isPassible(this.#posX, this.#posY - 1)))
+        if ((direction == "N") && (level.isPassible(this.posX, this.posY - 1)))
         {
-            this.#posY--;
+            this.posY--;
         }
-        else if ((direction == "S") && (level.isPassible(this.#posX, this.#posY + 1)))
+        else if ((direction == "S") && (level.isPassible(this.posX, this.posY + 1)))
         {
-            this.#posY++;
+            this.posY++;
         }
-        else if ((direction == "E") && (level.isPassible(this.#posX + 1, this.#posY)))
+        else if ((direction == "E") && (level.isPassible(this.posX + 1, this.posY)))
         {
-            this.#posX++;
+            this.posX++;
         }
-        else if ((direction == "W") && (level.isPassible(this.#posX - 1, this.#posY)))
+        else if ((direction == "W") && (level.isPassible(this.posX - 1, this.posY)))
         {
-            this.#posX--;
+            this.posX--;
         }
     }
 }
@@ -101,11 +101,11 @@ class Monster extends Critter
 
 class Exit extends Critter
 {
-    #targetMap
+    targetMap
     constructor(startX, startY, imageNumb, destMap)
     {
         super(startX, startY, imageNumb);
-        this.#targetMap = destMap;
+        this.targetMap = destMap;
     }
 
     get type()
@@ -115,7 +115,7 @@ class Exit extends Critter
 
     get destination()
     {
-        return(this.#targetMap);
+        return(this.targetMap);
     }
 
 
