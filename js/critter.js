@@ -1,36 +1,15 @@
-export default class Critter
+class Critter
 {
-    constructor(startX, startY, number, type, value)
+    constructor(startX, startY, imageNumb)
     {
         this.posX = startX;
         this.posY = startY;
-        this.imageNumber = number;
-        switch (type.toUpperCase())
-        {
-        case 'PLAYER':
-            this.cType = 0;
-            break;
-        case 'TREASURE':
-            this.cType = 1;
-            this.pointValue = value;
-            break;
-        case 'MONSTER':
-            this.cType = 2;
-            break;
-        default:
-            console.log('unknown type');
-        }
-        
+        this.imageNumber = imageNumb;
     }
 
-    getType()
+    get type()
     {
-        switch(this.cType)
-        {
-        case 0: return('PLAYER');
-        case 1: return('TREASURE');
-        case 2: return('MONSTER');
-        }
+
     }
 
     moveCritter(direction, level)
@@ -54,3 +33,50 @@ export default class Critter
     }
 }
 
+
+class Player extends Critter
+{
+    constructor(startX, startY, imageNumb)
+    {
+        super(startX, startY, imageNumb);
+    }
+
+    get type()
+    {
+        return('PLAYER');
+    }
+}
+
+class Treasure extends Critter
+{
+    constructor(posX, posY, imageNumb, treasureValue)
+    {
+        super(posX, posY, imageNumb);
+        this.treasureValue = treasureValue;
+    }
+
+    get type()
+    {
+        return('TREASURE');
+    }
+
+    get points()
+    {
+        return(this.treasureValue);
+    }
+}
+
+class Monster extends Critter
+{
+    constructor(startX, startY, imageNumb)
+    {
+        super(startX, startY, imageNumb);
+    }
+
+    get type()
+    {
+        return('MONSTER');
+    }
+}
+
+export {Critter, Player, Treasure, Monster}

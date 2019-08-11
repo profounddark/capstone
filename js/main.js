@@ -56,26 +56,26 @@ function processTurn(direction)
     let killCritters = [];
     for (let count = 0; count < currentLevel.critters.length; count++)
     {
-        if (currentLevel.critters[count].getType() == 'PLAYER')
+        if (currentLevel.critters[count].type == 'PLAYER')
         {
             repaintTiles.push({x:currentLevel.critters[count].posX, y:currentLevel.critters[count].posY});
             currentLevel.critters[count].moveCritter(direction, currentLevel);
             mainGame.updateEnergy();
         }
 
-        if ((currentLevel.critters[count].getType() == 'MONSTER') && ((currentLevel.turnCount % 2) == 0))
+        if ((currentLevel.critters[count].type == 'MONSTER') && ((currentLevel.turnCount % 2) == 0))
         {
             repaintTiles.push({x:currentLevel.critters[count].posX, y: currentLevel.critters[count].posY});
             currentLevel.critters[count].moveCritter(getRandomDirection(), currentLevel);
         }
 
-        if (currentLevel.critters[count].getType() == 'TREASURE')
+        if (currentLevel.critters[count].type == 'TREASURE')
         {
             if ((currentLevel.critters[count].posX == currentLevel.thePlayer.posX) && (currentLevel.critters[count].posY == currentLevel.thePlayer.posY))
             {
                 repaintTiles.push({x: currentLevel.critters[count].posX, y: currentLevel.critters[count].posY});
                 killCritters.push(count);
-                mainGame.updateScore(currentLevel.critters[count].pointValue);
+                mainGame.updateScore(currentLevel.critters[count].points);
             }
         }
 
