@@ -54,28 +54,38 @@ function processTurn(direction)
 {   
     let repaintTiles = [];
     let killCritters = [];
+    let isLevelOver = false;
     for (let count = 0; count < currentLevel.critters.length; count++)
     {
         if (currentLevel.critters[count].type == 'PLAYER')
         {
-            repaintTiles.push({x:currentLevel.critters[count].posX, y:currentLevel.critters[count].posY});
+            repaintTiles.push({x:currentLevel.critters[count].X, y:currentLevel.critters[count].Y});
             currentLevel.critters[count].moveCritter(direction, currentLevel);
             mainGame.updateEnergy();
         }
 
         if ((currentLevel.critters[count].type == 'MONSTER') && ((currentLevel.turnCount % 2) == 0))
         {
-            repaintTiles.push({x:currentLevel.critters[count].posX, y: currentLevel.critters[count].posY});
+            repaintTiles.push({x:currentLevel.critters[count].X, y: currentLevel.critters[count].Y});
             currentLevel.critters[count].moveCritter(getRandomDirection(), currentLevel);
         }
 
         if (currentLevel.critters[count].type == 'TREASURE')
         {
-            if ((currentLevel.critters[count].posX == currentLevel.thePlayer.posX) && (currentLevel.critters[count].posY == currentLevel.thePlayer.posY))
+            if ((currentLevel.critters[count].X == currentLevel.thePlayer.X) && (currentLevel.critters[count].Y == currentLevel.thePlayer.Y))
             {
-                repaintTiles.push({x: currentLevel.critters[count].posX, y: currentLevel.critters[count].posY});
+                repaintTiles.push({x: currentLevel.critters[count].X, y: currentLevel.critters[count].Y});
                 killCritters.push(count);
                 mainGame.updateScore(currentLevel.critters[count].points);
+            }
+        }
+
+        if (currentLevel.critters[count].type == 'EXIT')
+        {
+            if ((currentLevel.critters[count].X == currentLevel.thePlayer.X) && (currentLevel.critters[count].Y == currentLevel.thePlayer.Y))
+            {
+                console.log('Instance new map: ' + currentLevel.critters[count].destination);
+                isLevelOver = true;
             }
         }
 
@@ -96,33 +106,64 @@ function processTurn(direction)
     });
     
     //increment the turn counter
-    currentLevel.turnCount++;    
+    currentLevel.turnCount++; 
+
+    if (isLevelOver)
+    {
+        currentLevel = new LevelMap();
+        currentLevel.drawMap();
+    }
 
 }
 
 
+function setGameControls()
+{
+    // I really need a better way of doing this. Consider this a kludge
+    document.getElementById('up').addEventListener("mousedown", function(event)
+    {
+        processTurn('N');
+    });
+    document.getElementById('right').addEventListener("mousedown", function(event)
+    {
+        processTurn('E');
+    });
+    document.getElementById('down').addEventListener("mousedown", function(event)
+    {
+        processTurn('S');
+    });
+    document.getElementById('left').addEventListener("mousedown", function(event)
+    {
+        processTurn('W');
+    });
+
+    document.addEventListener("keydown", event =>{
+        if (event.key == "ArrowUp" || event.key == "w")
+        {
+            event.preventDefault();
+            processTurn("N");
+        }
+        else if (event.key == "ArrowDown" || event.key == "s")
+        {
+            event.preventDefault();
+            processTurn("S");
+        }
+        else if (event.key == "ArrowRight" || event.key == "d")
+        {
+            event.preventDefault();
+            processTurn("E");
+        }
+        else if (event.key == "ArrowLeft" || event.key == "a")
+        {
+            event.preventDefault();
+            processTurn("W");
+        }
+    });
+}
 
 document.addEventListener("DOMContentLoaded", function(event)
     {
         
-        // I really need a better way of doing this. Consider this a kludge
-        document.getElementById('up').addEventListener("mousedown", function(event)
-        {
-            processTurn('N');
-        });
-        document.getElementById('right').addEventListener("mousedown", function(event)
-        {
-            processTurn('E');
-        });
-        document.getElementById('down').addEventListener("mousedown", function(event)
-        {
-            processTurn('S');
-        });
-        document.getElementById('left').addEventListener("mousedown", function(event)
-        {
-            processTurn('W');
-        });
-
         document.getElementById('startbutton').addEventListener("mousedown", function(event)
         {
             let titleScreen = document.getElementById('titlescreen');
@@ -132,40 +173,16 @@ document.addEventListener("DOMContentLoaded", function(event)
             let levelScreen = document.getElementById('levelscreen');
             levelScreen.classList.remove('inactive');
             levelScreen.classList.add('active');
+
+            mainGame = new GameState();
+            currentLevel = new LevelMap();
+            currentLevel.drawMap();
+            setGameControls();
         });
-
-
-        mainGame = new GameState();
-        currentLevel = new LevelMap();
-        currentLevel.drawMap();
-    
-
-        
     }
 );
 
 
-document.addEventListener("keydown", event =>{
-    if (event.key == "ArrowUp" || event.key == "w")
-    {
-        event.preventDefault();
-        processTurn("N");
-    }
-    else if (event.key == "ArrowDown" || event.key == "s")
-    {
-        event.preventDefault();
-        processTurn("S");
-    }
-    else if (event.key == "ArrowRight" || event.key == "d")
-    {
-        event.preventDefault();
-        processTurn("E");
-    }
-    else if (event.key == "ArrowLeft" || event.key == "a")
-    {
-        event.preventDefault();
-        processTurn("W");
-    }
-});
+
 
 

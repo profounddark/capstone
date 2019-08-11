@@ -1,9 +1,11 @@
 class Critter
 {
+    #posX
+    #posY
     constructor(startX, startY, imageNumb)
     {
-        this.posX = startX;
-        this.posY = startY;
+        this.#posX = startX;
+        this.#posY = startY;
         this.imageNumber = imageNumb;
     }
 
@@ -12,27 +14,38 @@ class Critter
 
     }
 
+    get X()
+    {
+        return this.#posX;
+    }
+
+    get Y()
+    {
+        return this.#posY;
+    }
+
     moveCritter(direction, level)
     {
-        if ((direction == "N") && (level.isPassible(this.posX, this.posY - 1)))
+        if ((direction == "N") && (level.isPassible(this.#posX, this.#posY - 1)))
         {
-            this.posY--;
+            this.#posY--;
         }
-        else if ((direction == "S") && (level.isPassible(this.posX, this.posY + 1)))
+        else if ((direction == "S") && (level.isPassible(this.#posX, this.#posY + 1)))
         {
-            this.posY++;
+            this.#posY++;
         }
-        else if ((direction == "E") && (level.isPassible(this.posX + 1, this.posY)))
+        else if ((direction == "E") && (level.isPassible(this.#posX + 1, this.#posY)))
         {
-            this.posX++;
+            this.#posX++;
         }
-        else if ((direction == "W") && (level.isPassible(this.posX - 1, this.posY)))
+        else if ((direction == "W") && (level.isPassible(this.#posX - 1, this.#posY)))
         {
-            this.posX--;
+            this.#posX--;
         }
     }
 }
 
+/**** Player Extension ****/
 
 class Player extends Critter
 {
@@ -47,11 +60,14 @@ class Player extends Critter
     }
 }
 
+/**** Treasure Extension ****/
+
+
 class Treasure extends Critter
 {
-    constructor(posX, posY, imageNumb, treasureValue)
+    constructor(startX, startY, imageNumb, treasureValue)
     {
-        super(posX, posY, imageNumb);
+        super(startX, startY, imageNumb);
         this.treasureValue = treasureValue;
     }
 
@@ -66,6 +82,8 @@ class Treasure extends Critter
     }
 }
 
+/**** Monster Extension ****/
+
 class Monster extends Critter
 {
     constructor(startX, startY, imageNumb)
@@ -79,4 +97,28 @@ class Monster extends Critter
     }
 }
 
-export {Critter, Player, Treasure, Monster}
+/**** Exit Extension ****/
+
+class Exit extends Critter
+{
+    #targetMap
+    constructor(startX, startY, imageNumb, destMap)
+    {
+        super(startX, startY, imageNumb);
+        this.#targetMap = destMap;
+    }
+
+    get type()
+    {
+        return('EXIT');
+    }
+
+    get destination()
+    {
+        return(this.#targetMap);
+    }
+
+
+}
+
+export {Critter, Player, Treasure, Monster, Exit}

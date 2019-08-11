@@ -1,4 +1,4 @@
-import {Critter, Player, Treasure, Monster} from './critter.js';
+import {Player, Treasure, Monster, Exit} from './critter.js';
 
 export default class LevelMap
 {
@@ -34,6 +34,7 @@ export default class LevelMap
         this.critters[5] = new Treasure(13, 2, 4, 1000);
         this.critters[6] = new Monster(12, 2, 5);
         this.critters[7] = new Monster(11, 3, 5);
+        this.critters[8] = new Exit(13, 12, -1, 'nextMap');
 
         // this is so I have a way to always reference the Player, if needed
         this.thePlayer = this.critters[0];
@@ -94,17 +95,19 @@ export default class LevelMap
 
     drawCritter(theCritter)
     {
+        if (theCritter.imageNumber >= 0)
+        {
         this.gameWindow.drawImage(
             this.critterAtlas,
             theCritter.imageNumber * this.tileSize,
             0,
             this.tileSize,
             this.tileSize,
-            theCritter.posX * this.tileSize,
-            theCritter.posY * this.tileSize,
+            theCritter.X * this.tileSize,
+            theCritter.Y * this.tileSize,
             this.tileSize,
             this.tileSize);
-        
+        }
     }
 
     drawMap()
