@@ -54,7 +54,7 @@ function processTurn(direction)
 {   
     let repaintTiles = [];
     let killCritters = [];
-    let isLevelOver = false;
+    let nextLevel = null;
     for (let count = 0; count < currentLevel.critters.length; count++)
     {
         if (currentLevel.critters[count].type == 'PLAYER')
@@ -66,26 +66,30 @@ function processTurn(direction)
 
         if ((currentLevel.critters[count].type == 'MONSTER') && ((currentLevel.turnCount % 2) == 0))
         {
-            repaintTiles.push({x:currentLevel.critters[count].X, y: currentLevel.critters[count].Y});
-            currentLevel.critters[count].moveCritter(getRandomDirection(), currentLevel);
+            if (currentLevel.critters[count].isAdjacent(currentLevel.thePlayer))
+            {
+                mainGame.updateEnergy(-currentLevel.critters[count].damage);
+            }
+            else
+            {
+                repaintTiles.push({x:currentLevel.critters[count].X, y: currentLevel.critters[count].Y});
+                currentLevel.critters[count].moveCritter(getRandomDirection(), currentLevel);
+            }
         }
 
-        if (currentLevel.critters[count].type == 'TREASURE')
+        if ((currentLevel.critters[count].type == 'TREASURE') && (currentLevel.critters[count].isSameSpace(currentLevel.thePlayer)))
         {
-            if ((currentLevel.critters[count].X == currentLevel.thePlayer.X) && (currentLevel.critters[count].Y == currentLevel.thePlayer.Y))
-            {
-                repaintTiles.push({x: currentLevel.critters[count].X, y: currentLevel.critters[count].Y});
-                killCritters.push(count);
-                mainGame.updateScore(currentLevel.critters[count].points);
-            }
+            repaintTiles.push({x: currentLevel.critters[count].X, y: currentLevel.critters[count].Y});
+            killCritters.push(count);
+            mainGame.updateScore(currentLevel.critters[count].points);
         }
 
         if (currentLevel.critters[count].type == 'EXIT')
         {
-            if ((currentLevel.critters[count].X == currentLevel.thePlayer.X) && (currentLevel.critters[count].Y == currentLevel.thePlayer.Y))
+            if (currentLevel.critters[count].XY == currentLevel.thePlayer.XY)
             {
                 console.log('Instance new map: ' + currentLevel.critters[count].destination);
-                isLevelOver = true;
+                nextLevel = currentLevel.critters[count].destination;
             }
         }
 
@@ -108,12 +112,23 @@ function processTurn(direction)
     //increment the turn counter
     currentLevel.turnCount++; 
 
-    if (isLevelOver)
+    if (nextLevel)
     {
-        currentLevel = new LevelMap();
+        loadLevel(nextLevel);
         currentLevel.drawMap();
     }
 
+}
+
+function loadLevel(newLevel)
+{
+    fetch('./leveldata/' + newLevel + '.json')
+    .then((resp) => resp.json())
+    .then(function(data)
+        {
+            currentLevel = new LevelMap(data);
+            currentLevel.drawMap();
+        });
 }
 
 
@@ -175,9 +190,9 @@ document.addEventListener("DOMContentLoaded", function(event)
             levelScreen.classList.add('active');
 
             mainGame = new GameState();
-            currentLevel = new LevelMap();
-            currentLevel.drawMap();
             setGameControls();
+            loadLevel('level01');
+
         });
     }
 );

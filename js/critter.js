@@ -41,6 +41,29 @@ class Critter
             this.posX--;
         }
     }
+
+    get XY()
+    {
+        return (this.posY * 15 + this.posX)
+    }
+
+    isSameSpace(otherCritter)
+    {
+        return ((this.X==otherCritter.X) && (this.Y==otherCritter.Y));
+    }
+
+    isAdjacent(otherCritter)
+    {
+        if ((this.X==otherCritter.X) && (Math.abs(this.Y-otherCritter.Y)==1))
+        {
+            return true;
+        }
+        if ((this.Y==otherCritter.Y) && (Math.abs(this.X-otherCritter.X)==1))
+        {
+            return true;
+        }
+        return false;
+    }
 }
 
 /**** Player Extension ****/
@@ -84,14 +107,20 @@ class Treasure extends Critter
 
 class Monster extends Critter
 {
-    constructor(startX, startY, imageNumb)
+    constructor(startX, startY, imageNumb, damage)
     {
         super(startX, startY, imageNumb);
+        this.energyDamage = damage;
     }
 
     get type()
     {
         return('MONSTER');
+    }
+
+    get damage()
+    {
+        return(this.energyDamage);
     }
 }
 

@@ -2,42 +2,36 @@ import {Player, Treasure, Monster, Exit} from './critter.js';
 
 export default class LevelMap
 {
-    constructor()
+    constructor(levelData)
     {
-        this.columns = 15;
-        this.rows = 15;
+        this.columns = levelData.columns;
+        this.rows = levelData.rows;
+        this.tileMap = levelData.levelmap
+        
+        this.critters = [];
+        this.critters[0] = new Player(levelData.player.startX, levelData.player.startY, levelData.player.tile);
+        for (let count = 0; count < levelData.treasure.length; count++)
+        {
+            let newTreasure = new Treasure(levelData.treasure[count].startX, levelData.treasure[count].startY, levelData.treasure[count].tile, levelData.treasure[count].points);
+            this.critters.push(newTreasure);
+        }
+        for (let count = 0; count < levelData.monster.length; count++)
+        {
+            let newMonster = new Monster(levelData.monster[count].startX, levelData.monster[count].startY, levelData.monster[count].tile, levelData.monster[count].damage);
+            this.critters.push(newMonster);
+        }
+        for (let count = 0; count < levelData.exit.length; count++)
+        {
+            let newExit = new Exit(levelData.exit[count].startX, levelData.exit[count].startY, levelData.exit[count].tile, levelData.exit[count].destination);
+            this.critters.push(newExit);
+        }
+        this.thePlayer = this.critters[0];
+      
         this.tileSize = 16;
-        this.tileMap =
-        [
-            -1,  8,  8,  8,  8,  9, 10,  7,  8,  8,  8,  8,  8,  8, -1,
-             6,  0,  0,  0,  0, 19, 10,  0,  0,  0,  0,  0,  0,  0,  5,
-             6,  0, 22,  0, 22,  0, 16,  0,  0,  0,  0,  0,  0,  0,  5,
-             6,  0,  0,  0, 20,  0, 10,  0,  0,  0,  0,  0,  0,  0,  5,
-             6,  0,  0, 19,  0,  0, 10,  0,  0,  0,  0,  0,  0,  0,  5,
-             6,  0, 22,  0,  0, 20, 10,  0,  0,  0,  0,  0,  0,  0,  5,
-             6,  0, 20,  0, 19,  0, 16,  0,  0,  0,  0,  0,  0,  0,  5,
-             6,  0, 19,  0, 20,  0, 15, 11, 13, 21, 22, 21, 22, 22,  5,
-             6,  0, 20,  0, 19,  0,  0,  0, 10,  1,  1,  1,  1,  1,  5,
-             6,  0, 22,  0,  0, 20, 19,  0, 16,  1, 21, 21, 21,  1,  5,
-             6,  0,  0,  0,  0,  0, 20, 19, 10, 22,  1,  1,  1,  1,  5,
-             6,  0,  0,  0, 19,  0,  0,  0, 10,  1,  1, 21,  1, 21,  5,
-             6, 22, 20,  0, 20, 19, 22,  0, 10,  1, 22, 22, 21, 18,  5,
-             6,  0,  0,  0,  0,  0,  0,  0, 10,  1,  1,  1,  1,  1,  5,
-            -1,  3,  3,  3,  3,  3,  3,  4, 10,  2,  3,  3,  3,  3, -1
-        ]
-        this.critters = [ ];
-        this.critters[0] = new Player(1, 1, 0);
-        this.critters[1] = new Treasure(4, 1, 2, 100);
-        this.critters[2] = new Treasure(1, 13, 3, 500);
-        this.critters[3] = new Treasure(7, 12, 3, 500);
-        this.critters[4] = new Treasure(12, 11, 2, 100);
-        this.critters[5] = new Treasure(13, 2, 4, 1000);
-        this.critters[6] = new Monster(12, 2, 5);
-        this.critters[7] = new Monster(11, 3, 5);
-        this.critters[8] = new Exit(13, 12, -1, 'nextMap');
+
 
         // this is so I have a way to always reference the Player, if needed
-        this.thePlayer = this.critters[0];
+
         
         this.turnCount = 0;
         
