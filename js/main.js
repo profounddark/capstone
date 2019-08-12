@@ -98,6 +98,14 @@ function processTurn(direction)
             mainGame.updateInfo("You got a treasure worth " + currentLevel.critters[count].points + " points!");
         }
 
+        if ((currentLevel.critters[count].type == 'FOOD') && (currentLevel.critters[count].isSameSpace(currentLevel.thePlayer)))
+        {
+            repaintTiles.push({x: currentLevel.critters[count].X, y: currentLevel.critters[count].Y});
+            killCritters.push(count);
+            mainGame.updateEnergy(currentLevel.critters[count].energy);
+            mainGame.updateInfo("You got food worth " + currentLevel.critters[count].energy + " energy!");
+        }
+
         if (currentLevel.critters[count].type == 'EXIT')
         {
             if (currentLevel.critters[count].XY == currentLevel.thePlayer.XY)

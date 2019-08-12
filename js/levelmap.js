@@ -1,4 +1,4 @@
-import {Player, Treasure, RandomMonster, TwoWayMonster, Exit} from './critter.js';
+import {Player, Treasure, Food, RandomMonster, TwoWayMonster, Exit} from './critter.js';
 
 export default class LevelMap
 {
@@ -9,11 +9,16 @@ export default class LevelMap
         this.tileMap = levelData.levelmap
         
         this.critters = [];
-        this.critters[0] = new Player(levelData.player.startX, levelData.player.startY, levelData.player.tile);
+        this.critters[0] = new Player(levelData.player.X, levelData.player.Y, levelData.player.tile);
         for (let count = 0; count < levelData.treasure.length; count++)
         {
-            let newTreasure = new Treasure(levelData.treasure[count].startX, levelData.treasure[count].startY, levelData.treasure[count].tile, levelData.treasure[count].points);
+            let newTreasure = new Treasure(levelData.treasure[count].X, levelData.treasure[count].Y, levelData.treasure[count].tile, levelData.treasure[count].points);
             this.critters.push(newTreasure);
+        }
+        for (let count=0; count < levelData.food.length; count++)
+        {
+            let newFood = new Food(levelData.food[count].X, levelData.food[count].Y, levelData.food[count].tile, levelData.food[count].energy);
+            this.critters.push(newFood);
         }
         for (let count = 0; count < levelData.monster.length; count++)
         {
@@ -21,19 +26,19 @@ export default class LevelMap
             switch (levelData.monster[count].type)
             {
                 case "RND":
-                    newMonster = new RandomMonster(levelData.monster[count].startX, levelData.monster[count].startY, levelData.monster[count].tile, levelData.monster[count].damage);
+                    newMonster = new RandomMonster(levelData.monster[count].X, levelData.monster[count].Y, levelData.monster[count].tile, levelData.monster[count].damage);
                     break;
                 case "NS":
-                    newMonster = new TwoWayMonster(levelData.monster[count].startX, levelData.monster[count].startY, levelData.monster[count].tile, levelData.monster[count].damage, 'N');
+                    newMonster = new TwoWayMonster(levelData.monster[count].X, levelData.monster[count].Y, levelData.monster[count].tile, levelData.monster[count].damage, 'N');
                     break;
                 case "SN":
-                    newMonster = new TwoWayMonster(levelData.monster[count].startX, levelData.monster[count].startY, levelData.monster[count].tile, levelData.monster[count].damage, 'S');
+                    newMonster = new TwoWayMonster(levelData.monster[count].X, levelData.monster[count].Y, levelData.monster[count].tile, levelData.monster[count].damage, 'S');
                     break;    
                 case "EW":
-                    newMonster = new TwoWayMonster(levelData.monster[count].startX, levelData.monster[count].startY, levelData.monster[count].tile, levelData.monster[count].damage, 'E');
+                    newMonster = new TwoWayMonster(levelData.monster[count].X, levelData.monster[count].Y, levelData.monster[count].tile, levelData.monster[count].damage, 'E');
                     break;
                 case "WE":
-                    newMonster = new TwoWayMonster(levelData.monster[count].startX, levelData.monster[count].startY, levelData.monster[count].tile, levelData.monster[count].damage, 'W');
+                    newMonster = new TwoWayMonster(levelData.monster[count].X, levelData.monster[count].Y, levelData.monster[count].tile, levelData.monster[count].damage, 'W');
                     break;
             }
             this.critters.push(newMonster);
@@ -58,7 +63,9 @@ export default class LevelMap
         [
             true,
             true, true, false, false, false,
-            false, false, false, false, false,
+            false, false, true, 
+            // break in new tilemap
+            false, false,
             false, false, false, false, false,
             false, true, true, true, false,
             false, false, false, true];

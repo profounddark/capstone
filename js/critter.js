@@ -39,6 +39,11 @@ class Critter
         return (this.posY * 15 + this.posX)
     }
 
+    get passible()
+    {
+        return(false);
+    }
+
     isSameSpace(otherCritter)
     {
         return ((this.X==otherCritter.X) && (this.Y==otherCritter.Y));
@@ -71,6 +76,7 @@ class Player extends Critter
     {
         return('PLAYER');
     }
+
 }
 
 /**** Treasure Extension ****/
@@ -90,6 +96,36 @@ class Treasure extends Critter
     get points()
     {
         return(this.treasureValue);
+    }
+
+    get passible()
+    {
+        return(true);
+    }
+}
+
+/**** Food Extension ****/
+class Food extends Critter
+{
+    constructor(startX, startY, imageNumb, energyValue)
+    {
+        super(startX, startY, imageNumb);
+        this.energyValue = energyValue;
+    }
+
+    get type()
+    {
+        return('FOOD');
+    }
+
+    get energy()
+    {
+        return(this.energyValue);
+    }
+
+    get passible()
+    {
+        return(true);
     }
 }
 
@@ -177,7 +213,11 @@ class Exit extends Critter
         return(this.targetMap);
     }
 
+    get passible()
+    {
+        return(true);
+    }
 
 }
 
-export {Critter, Player, Treasure, RandomMonster, TwoWayMonster, Exit}
+export {Critter, Player, Treasure, Food, RandomMonster, TwoWayMonster, Exit}

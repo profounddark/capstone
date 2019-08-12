@@ -63,20 +63,13 @@ body
 .infobox p
 {
     display:none;
-    font-size: .75rem;
+    font-size: .5rem;
 }
 
 .infobox p:last-child
 { 
     display: block;
-    font-size: .85rem;
-}
-
-@keyframes greentext
-{
-    0%      {color: white;}
-    50%     {color: green;}
-    100%    {color: white;}
+    font-size: .6rem;
 }
 
 
