@@ -65,7 +65,9 @@ With the individual classes now relegated to separate .JS files, it became much 
 This expansion of the ```Critter``` class also included a new subclass, the ```Food``` class. ```Food``` and ```Treasure``` work very similarly but contribute to different parameters: **Energy** and **Points**, respectively. It seems relatively obvious that these two could likely be reduced to a single subclass that simply affect different game parameters. That is something that will be added later, when I get to more serious refactoring.
 
 ## Page/View Development
-A basic start page was added that included a start button. 
+A basic start page was added that included a start button.
+
+![Image of the Game Start Screen](image/pt3_startscreen.png)
 
 One unique "bug" that developed from this was the fact that all of the movement control listeners were established either after the DOM loaded or in the main.js file itself. This meant that from the start screen the player could actually start "playing" the game (even though it was not visible). To remedy this, all of the code for adding event listeners for game inputs (both keyboard and mobile buttons) were moved to the ```mousedown``` event for the button.
 
