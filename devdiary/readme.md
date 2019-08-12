@@ -27,7 +27,7 @@ Completed this week:
 ## August 11, 2019 - The Third Week of Development
 This is the week where I spent a lot of time trying to finish the "core game loop." It's mostly done, although there's technically no end state (i.e., game over). But, otherwise it's essentially a working game wiht two levels. The full entry can be found [here](./part03.md).
 
-![Image of the Second Screenshot](./image/pt2_screenshot.png)
+![Image of the Third Screenshot](./image/pt3_screenshot.png)
 
 Completed this week:
 * Multiple levels saved as JSON
