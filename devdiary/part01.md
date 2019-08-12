@@ -4,7 +4,7 @@ This is the end of the first week of development of this Capstone project, tenta
 
 An image of the project at the time fo the writing of this entry:
 
-![Image of the First Screenshot](./image/pt1_initialscreen.png)
+![Image of the First Screenshot](./image/screenshot.png)
 
 ## Timeline
 According to the project timeline, the first week was dedicated to building the initial pages for the app and initial testing of the Canvas element in **HTML**. Portions of the project timeline are recreated below:
