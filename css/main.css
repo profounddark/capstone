@@ -11,11 +11,27 @@ body
 
 .start
 {
+    padding: 5%;
+    
     text-align: center;
+}
+
+.start p
+{
+    margin-bottom: 3rem;
+}
+
+.start img
+{ 
+    display: block;
+    padding: 0;
+    width: 8rem;
+    margin: .5rem auto;
 }
 
 .start button
 {
+    padding: 1rem;
     background-color: black;
     color: white;
     border-color: white;
@@ -27,11 +43,6 @@ body
     color:black;
     background-color: white;
     border-color: black;
-}
-
-.screen
-{
-
 }
 
 .inactive

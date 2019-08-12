@@ -60,21 +60,21 @@
         {
             "X": 11,
             "Y": 6,
-            "tile": 6,
+            "tile": 7,
             "damage": 10,
             "type": "SN"
         },
         {
             "X": 1,
             "Y": 3,
-            "tile": 6,
+            "tile": 7,
             "damage": 10,
             "type": "EW"
         },
         {
             "X": 4,
             "Y": 10,
-            "tile": 7,
+            "tile": 8,
             "damage": 15,
             "type": "RND"
         }

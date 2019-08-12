@@ -83,3 +83,8 @@ While developing a second level map, I also decided it would be a good time to r
 
 ### The Updated Critter Spritesheet:
 ![Image of the Critter Map](./image/pt3_critters.png)
+
+## The Scrolling Information Box
+One added feature not previously mentioned was the concept that a ```Monster``` can attack the ```Player``` if the monster starts its turn adjacent to the ```Player```. If this occurred, an appropriate amount would be deducted from the Energy parameter. However, there was the troubling notion that it was very difficult to even *notice* if such a thing happened. I wanted to add a feedback window that informed the player of things that happened. To that end, I created a new ```<div>``` that would be sent important information whenever it occurred. This included picking up points and/or food and taking damage.
+
+Unfortunately, this addition pointed out the somewhat unreliable nature of the CSS currently in use. In desktop testing, the information box appears to the side and can often make the size of the gameplay window change unexpectedly. On mobile, the information box can either cause the mobile contrls to move unexpectedly or to make the game entirely unplayable. Although the idea is novel, it's obvious that more work is needed.

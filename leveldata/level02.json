@@ -51,7 +51,7 @@
         {
             "X": 1,
             "Y": 8,
-            "tile": 4,
+            "tile": 6,
             "energy": 50
         },
         {
@@ -66,21 +66,21 @@
         {
             "X": 12,
             "Y": 10,
-            "tile": 7,
+            "tile": 8,
             "damage": 15,
             "type": "RND"
         },
         {
             "X": 10,
             "Y": 1,
-            "tile": 6,
+            "tile": 7,
             "damage": 10,
             "type": "SN"
         },
         {
             "X": 5,
             "Y": 6,
-            "tile": 6,
+            "tile": 7,
             "damage": 10,
             "type": "EW"
         },
