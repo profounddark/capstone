@@ -22,23 +22,15 @@ class Critter
         return this.posY;
     }
 
-    moveCritter(direction, level)
+    moveCritter(level, direction)
     {
-        if ((direction == "N") && (level.isPassible(this.posX, this.posY - 1)))
+        let newX = this.posX + (direction=="E") - (direction=="W");
+        let newY = this.posY + (direction=="S") - (direction=="N");
+
+        if (level.isPassible(newX, newY))
         {
-            this.posY--;
-        }
-        else if ((direction == "S") && (level.isPassible(this.posX, this.posY + 1)))
-        {
-            this.posY++;
-        }
-        else if ((direction == "E") && (level.isPassible(this.posX + 1, this.posY)))
-        {
-            this.posX++;
-        }
-        else if ((direction == "W") && (level.isPassible(this.posX - 1, this.posY)))
-        {
-            this.posX--;
+            this.posX = newX;
+            this.posY = newY;
         }
     }
 
@@ -82,8 +74,6 @@ class Player extends Critter
 }
 
 /**** Treasure Extension ****/
-
-
 class Treasure extends Critter
 {
     constructor(startX, startY, imageNumb, treasureValue)
@@ -104,13 +94,13 @@ class Treasure extends Critter
 }
 
 /**** Monster Extension ****/
-
 class Monster extends Critter
 {
     constructor(startX, startY, imageNumb, damage)
     {
         super(startX, startY, imageNumb);
         this.energyDamage = damage;
+
     }
 
     get type()
@@ -121,6 +111,49 @@ class Monster extends Critter
     get damage()
     {
         return(this.energyDamage);
+    }
+}
+
+/**** Random Monster Extension - moves randomly each time move is called ****/
+class RandomMonster extends Monster
+{
+    moveCritter(level)
+    {
+        let numb = Math.floor(Math.random() * 4);
+        switch (numb)
+        {
+            case 0: super.moveCritter(level, 'N'); break;
+            case 1: super.moveCritter(level, 'E'); break;
+            case 2: super.moveCritter(level, 'S'); break;
+            case 3: super.moveCritter(level, 'W'); break;
+        }
+    }
+}
+
+/**** TwoWay Monster Extension - moves back in forth NS, SN, EW, or WE *****/
+class TwoWayMonster extends Monster
+{
+    constructor(startX, startY, imageNumb, damage, direction)
+    {
+        super(startX, startY, imageNumb, damage);
+        this.lastDir = direction;
+    }
+
+    moveCritter(level)
+    {
+        let oldXY = this.XY;
+        super.moveCritter(level, this.lastDir);
+        if (this.XY == oldXY)
+        {
+            switch(this.lastDir)
+            {
+                case 'N': this.lastDir = 'S'; break;
+                case 'E': this.lastDir = 'W'; break;
+                case 'S': this.lastDir = 'N'; break;
+                case 'W': this.lastDir = 'E'; break;
+            }
+            super.moveCritter(level, this.lastDir);
+        }
     }
 }
 
@@ -147,4 +180,4 @@ class Exit extends Critter
 
 }
 
-export {Critter, Player, Treasure, Monster, Exit}
+export {Critter, Player, Treasure, RandomMonster, TwoWayMonster, Exit}

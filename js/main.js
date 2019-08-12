@@ -38,9 +38,6 @@ class GameState
 
     updateInfo(infoString)
     {
-        console.log(this.infoTracker.childElementCount);
-        console.log(this.infoTracker.childNodes);
-
         if (this.infoTracker.childElementCount == 10)
         {
             this.infoTracker.removeChild(this.infoTracker.childNodes[0]);
@@ -75,7 +72,7 @@ function processTurn(direction)
         if (currentLevel.critters[count].type == 'PLAYER')
         {
             repaintTiles.push({x:currentLevel.critters[count].X, y:currentLevel.critters[count].Y});
-            currentLevel.critters[count].moveCritter(direction, currentLevel);
+            currentLevel.critters[count].moveCritter(currentLevel, direction);
             mainGame.updateEnergy();
         }
 
@@ -89,7 +86,7 @@ function processTurn(direction)
             else
             {
                 repaintTiles.push({x:currentLevel.critters[count].X, y: currentLevel.critters[count].Y});
-                currentLevel.critters[count].moveCritter(getRandomDirection(), currentLevel);
+                currentLevel.critters[count].moveCritter(currentLevel);
             }
         }
 

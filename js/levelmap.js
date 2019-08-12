@@ -1,4 +1,4 @@
-import {Player, Treasure, Monster, Exit} from './critter.js';
+import {Player, Treasure, RandomMonster, TwoWayMonster, Exit} from './critter.js';
 
 export default class LevelMap
 {
@@ -17,7 +17,25 @@ export default class LevelMap
         }
         for (let count = 0; count < levelData.monster.length; count++)
         {
-            let newMonster = new Monster(levelData.monster[count].startX, levelData.monster[count].startY, levelData.monster[count].tile, levelData.monster[count].damage);
+            let newMonster;
+            switch (levelData.monster[count].type)
+            {
+                case "RND":
+                    newMonster = new RandomMonster(levelData.monster[count].startX, levelData.monster[count].startY, levelData.monster[count].tile, levelData.monster[count].damage);
+                    break;
+                case "NS":
+                    newMonster = new TwoWayMonster(levelData.monster[count].startX, levelData.monster[count].startY, levelData.monster[count].tile, levelData.monster[count].damage, 'N');
+                    break;
+                case "SN":
+                    newMonster = new TwoWayMonster(levelData.monster[count].startX, levelData.monster[count].startY, levelData.monster[count].tile, levelData.monster[count].damage, 'S');
+                    break;    
+                case "EW":
+                    newMonster = new TwoWayMonster(levelData.monster[count].startX, levelData.monster[count].startY, levelData.monster[count].tile, levelData.monster[count].damage, 'E');
+                    break;
+                case "WE":
+                    newMonster = new TwoWayMonster(levelData.monster[count].startX, levelData.monster[count].startY, levelData.monster[count].tile, levelData.monster[count].damage, 'W');
+                    break;
+            }
             this.critters.push(newMonster);
         }
         for (let count = 0; count < levelData.exit.length; count++)
@@ -39,11 +57,11 @@ export default class LevelMap
         this.collisionMap =
         [
             true,
-            true, false, false, false, false,
+            true, true, false, false, false,
             false, false, false, false, false,
             false, false, false, false, false,
-            true, true, true, false, false,
-            false, false];
+            false, true, true, true, false,
+            false, false, false, true];
 
         this.gameWindow = document.getElementById('gamemap').getContext('2d');
         this.tileAtlas = document.getElementById('tilesheet');
