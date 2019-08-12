@@ -63,9 +63,10 @@ export default class LevelMap
         [
             true,
             true, true, false, false, false,
-            false, false, true, 
+            false, false, true, false, false,
+            false, false, false, false, true,
+            true,
             // break in new tilemap
-            false, false,
             false, false, false, false, false,
             false, true, true, true, false,
             false, false, false, true];
