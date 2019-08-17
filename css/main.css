@@ -143,26 +143,36 @@ canvas
 
 @media screen and (min-width: 640px)
 {
-    
+    .main
+    {
+        display: grid;
+        width: 90%;
+        grid-template-columns: 640px auto;
+        grid-template-rows: 100px 540px;
+        margin: 1rem auto;
+    }
+
     .statbox
     {
+        text-align: center;
+        grid-column: 2 / span 1;
+        grid-row: 1 / span 1;
         flex-flow: column nowrap;
         justify-content: flex-start;
     }
     
-    .main
-    {
-        flex-flow: row nowrap;
-        justify-content: center;
-    }
-
     .infobox p
     {
+        margin: 0.5rem;
+        grid-column: 2 / span 1;
+        grid-row: 2 / span 1;
         display: block;
     }
     
     canvas
     {
+        grid-column: 1 / span 1;
+        grid-row: 1 / span 2;
         width: 640px;
         height: 640px;
     }

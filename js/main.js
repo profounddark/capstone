@@ -6,7 +6,7 @@ let mainGame;
 
 class GameState
 {
-    constructor(startScore = 0, startEnergy = 500)
+    constructor(startScore = 0, startEnergy = 150)
     {
         this.playerScore = startScore;
         this.playerEnergy = startEnergy;
@@ -112,7 +112,6 @@ function processTurn(direction)
             {
                 console.log('Instance new map: ' + currentLevel.critters[count].destination);
                 nextLevel = currentLevel.critters[count].destination;
-                mainGame.updateInfo("Moving to new level: " + nextLevel + "!");
             }
         }
 

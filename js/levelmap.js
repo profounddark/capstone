@@ -90,7 +90,22 @@ export default class LevelMap
         }
         else
         {
-            return this.collisionMap[this.getTile(x,y)];
+            if (!this.collisionMap[this.getTile(x,y)])
+            {
+                return false;
+            }
+            else
+            {
+                let isPass = true;
+                for(let count=0; count < this.critters.length; count++)
+                {
+                    if ((this.critters[count].X == x) && (this.critters[count].Y == y) && (!this.critters[count].passible))
+                    {
+                        isPass = false;
+                    };
+                }
+                return isPass;
+            }
         }
     }
 

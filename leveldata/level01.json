@@ -84,7 +84,7 @@
         {
             "startX": 14,
             "startY": 13,
-            "tile": -1,
+            "tile": 9,
             "destination": "level02"
         }
     ]
