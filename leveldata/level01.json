@@ -31,13 +31,13 @@
             "X": 11,
             "Y": 5,
             "tile": 3,
-            "points": 1000
+            "points": 100
         },
         {
             "X": 11,
             "Y": 13,
             "tile": 2,
-            "points": 500
+            "points": 50
         }
     ],
     "food":

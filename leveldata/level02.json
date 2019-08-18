@@ -31,19 +31,19 @@
             "X": 7,
             "Y": 12,
             "tile": 2,
-            "points": 500
+            "points": 50
         },
         {
             "X": 9,
             "Y": 11,
             "tile": 3,
-            "points": 1000
+            "points": 100
         },
         {
             "X": 1,
             "Y": 1,
             "tile": 3,
-            "points": 1000
+            "points": 100
         }
     ],
     "food":

@@ -14,8 +14,25 @@ class GameState
         this.scoreTracker = document.getElementById('scoretracker');
         this.energyTracker = document.getElementById('energytracker');
         this.infoTracker = document.getElementById('infotracker');
+
         this.updateScore(0);
         this.updateEnergy(0);
+
+        this.acceptInput = false;
+
+        this.infoTracker.innerHTML = "";
+        this.updateInfo('Welcome to Capstone Adventure!');
+    }
+
+    switchScreens(current, next)
+    {
+        let currentScreen = document.getElementById(current);
+        currentScreen.classList.remove('active');
+        currentScreen.classList.add('inactive');
+        
+        let nextScreen = document.getElementById(next);
+        nextScreen.classList.remove('inactive');
+        nextScreen.classList.add('active');
     }
 
     updateScore(amount = 0)
@@ -30,9 +47,9 @@ class GameState
         this.playerEnergy = this.playerEnergy + amount;
         let energyStr = this.playerEnergy.toString();
         this.energyTracker.innerHTML = energyStr.padStart(4, '0');
-        if (this.playerEnergy == 0)
+        if (this.playerEnergy <= 0)
         {
-            console.log('throw end of game event');
+            this.endGame();
         }
     }
 
@@ -47,25 +64,73 @@ class GameState
         this.infoTracker.appendChild(newText);
     }
 
+    endGame()
+    {
+        this.acceptInput = false;
+        document.getElementById("finalpoints").innerHTML = this.playerScore;
+        mainGame.switchScreens('levelscreen', 'gameoverscreen');
+    }
+
+    
+
 }
 
-function getRandomDirection()
-{
-    let numb = Math.floor(Math.random() * 4);
-    switch (numb)
+
+function setGameControls()
     {
-        case 0: return 'N';
-        case 1: return 'E';
-        case 2: return 'S';
-        case 3: return 'W';
+        // I really need a better way of doing this. Consider this a kludge
+        document.getElementById('up').addEventListener("mousedown", function(event)
+        {
+            processTurn('N');
+        });
+        document.getElementById('right').addEventListener("mousedown", function(event)
+        {
+            processTurn('E');
+        });
+        document.getElementById('down').addEventListener("mousedown", function(event)
+        {
+            processTurn('S');
+        });
+        document.getElementById('left').addEventListener("mousedown", function(event)
+        {
+            processTurn('W');
+        });
+
+        document.addEventListener("keydown", event =>{
+            if (event.key == "ArrowUp" || event.key == "w")
+            {
+                event.preventDefault();
+                processTurn("N");
+            }
+            else if (event.key == "ArrowDown" || event.key == "s")
+            {
+                event.preventDefault();
+                processTurn("S");
+            }
+            else if (event.key == "ArrowRight" || event.key == "d")
+            {
+                event.preventDefault();
+                processTurn("E");
+            }
+            else if (event.key == "ArrowLeft" || event.key == "a")
+            {
+                event.preventDefault();
+                processTurn("W");
+            }
+        });
     }
-}
 
 function processTurn(direction)
 {   
     let repaintTiles = [];
     let killCritters = [];
     let nextLevel = null;
+
+    if(!mainGame.acceptInput)
+    {
+        console.log(mainGame.acceptInput);
+        return;
+    }
 
     for (let count = 0; count < currentLevel.critters.length; count++)
     {
@@ -152,70 +217,29 @@ function loadLevel(newLevel)
         {
             currentLevel = new LevelMap(data);
             currentLevel.drawMap();
+            mainGame.acceptInput = true;
         });
 }
 
-
-function setGameControls()
-{
-    // I really need a better way of doing this. Consider this a kludge
-    document.getElementById('up').addEventListener("mousedown", function(event)
-    {
-        processTurn('N');
-    });
-    document.getElementById('right').addEventListener("mousedown", function(event)
-    {
-        processTurn('E');
-    });
-    document.getElementById('down').addEventListener("mousedown", function(event)
-    {
-        processTurn('S');
-    });
-    document.getElementById('left').addEventListener("mousedown", function(event)
-    {
-        processTurn('W');
-    });
-
-    document.addEventListener("keydown", event =>{
-        if (event.key == "ArrowUp" || event.key == "w")
-        {
-            event.preventDefault();
-            processTurn("N");
-        }
-        else if (event.key == "ArrowDown" || event.key == "s")
-        {
-            event.preventDefault();
-            processTurn("S");
-        }
-        else if (event.key == "ArrowRight" || event.key == "d")
-        {
-            event.preventDefault();
-            processTurn("E");
-        }
-        else if (event.key == "ArrowLeft" || event.key == "a")
-        {
-            event.preventDefault();
-            processTurn("W");
-        }
-    });
-}
 
 document.addEventListener("DOMContentLoaded", function(event)
     {
         
         document.getElementById('startbutton').addEventListener("mousedown", function(event)
         {
-            let titleScreen = document.getElementById('titlescreen');
-            titleScreen.classList.remove('active');
-            titleScreen.classList.add('inactive');
-            
-            let levelScreen = document.getElementById('levelscreen');
-            levelScreen.classList.remove('inactive');
-            levelScreen.classList.add('active');
-
             mainGame = new GameState();
-            mainGame.updateInfo('Welcome to Capstone Adventure!');
+            mainGame.switchScreens('titlescreen', 'levelscreen');
             setGameControls();
+
+            loadLevel('level01');
+
+        });
+
+        document.getElementById('restartbutton').addEventListener("mousedown", function(event)
+        {
+            mainGame = new GameState();
+            mainGame.switchScreens('gameoverscreen', 'levelscreen');
+
             loadLevel('level01');
 
         });
