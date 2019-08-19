@@ -1,16 +1,7 @@
 import LevelMap from './levelmap.js';
+import {firebaseConfig} from './api.js';
 
-// Your web app's Firebase configuration
-var firebaseConfig = {
-    apiKey: "AIzaSyBMDRXSa_D27uFABQr0KA-rRVSd8ZOdIA0",
-    authDomain: "profounddark-capstone.firebaseapp.com",
-    databaseURL: "https://profounddark-capstone.firebaseio.com",
-    projectId: "profounddark-capstone",
-    storageBucket: "profounddark-capstone.appspot.com",
-    messagingSenderId: "433989331653",
-    appId: "1:433989331653:web:3a173da334de7223"
-  };
-  // Initialize Firebase
+
 firebase.initializeApp(firebaseConfig);
 var firestore = firebase.firestore();
 
