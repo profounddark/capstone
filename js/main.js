@@ -1,5 +1,21 @@
 import LevelMap from './levelmap.js';
 
+// Your web app's Firebase configuration
+var firebaseConfig = {
+    apiKey: "AIzaSyBMDRXSa_D27uFABQr0KA-rRVSd8ZOdIA0",
+    authDomain: "profounddark-capstone.firebaseapp.com",
+    databaseURL: "https://profounddark-capstone.firebaseio.com",
+    projectId: "profounddark-capstone",
+    storageBucket: "profounddark-capstone.appspot.com",
+    messagingSenderId: "433989331653",
+    appId: "1:433989331653:web:3a173da334de7223"
+  };
+  // Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+var firestore = firebase.firestore();
+
+const docRef = firestore.collection("gamedata").doc("highscores");
+const scoreTable = document.getElementById('highscoretable');
 let currentLevel;
 
 
@@ -222,10 +238,38 @@ function loadLevel(newLevel)
         });
 }
 
+function addHighscore(playername, score)
+{
+    
+}
+
+function loadHighScores()
+{
+    docRef.get().then(function (doc) {
+        if (doc && doc.exists) {
+            let scoreData = doc.data().scores;
+            scoreTable.innerHTML = "";
+            for (let i=0; i < 10; i++)
+            {
+                let newRow = document.createElement('tr');
+                let newName = document.createElement('td');
+                newName.innerText = scoreData[i].playername;
+                newRow.appendChild(newName);
+                let newScore = document.createElement('td');
+                newScore.innerText = scoreData[i].score;
+                newRow.appendChild(newScore);
+                scoreTable.appendChild(newRow);
+            }
+       }
+    }).catch(function(error){
+        console.log("Got an error: ", error);
+    });
+}
 
 document.addEventListener("DOMContentLoaded", function(event)
     {
         setGameControls();
+        loadHighScores();
 
         let buttonList = document.querySelectorAll('#screenbutton');
         buttonList.forEach(function(button)
@@ -243,7 +287,6 @@ document.addEventListener("DOMContentLoaded", function(event)
             });
         });
     });
-
 
 
 

@@ -21,7 +21,7 @@
         
             </head>
     <body>
-        <script type="module" src="./js/main.js"></script>
+
         
         <div class="gamescreen active" id="titlescreen">
             <h1>Capstone! Adventure</h1>
@@ -50,17 +50,8 @@
 
         <div class="gamescreen inactive" id="highscorescreen">
             <h1>High Scores</h1>
-            <table>
-                <tr><td>Andrew</td><td>1000</td></tr>
-                <tr><td>Andrew</td><td>900</td></tr>
-                <tr><td>Andrew</td><td>800</td></tr>
-                <tr><td>Andrew</td><td>700</td></tr>
-                <tr><td>Andrew</td><td>600</td></tr>
-                <tr><td>Andrew</td><td>500</td></tr>
-                <tr><td>Andrew</td><td>400</td></tr>
-                <tr><td>Andrew</td><td>300</td></tr>
-                <tr><td>Andrew</td><td>200</td></tr>
-                <tr><td>Andrew</td><td>100</td></tr>
+            <table id="highscoretable">
+                <tr><td>Poop</td><td>1000</td></tr>
             </table>
 
             <button id="screenbutton" source="highscorescreen" destination="titlescreen">Back to Title</button>
@@ -88,5 +79,11 @@
 
         <img class="tiles" id="tilesheet" src="./tiles/tilesheet.png">
         <img class="tiles" id="crittersheet" src="./tiles/critters.png">
+
+        <!-- The core Firebase JS SDK is always required and must be listed first -->
+        <script src="https://www.gstatic.com/firebasejs/6.4.0/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/6.4.0/firebase-firestore.js"></script>
+        
+        <script type="module" src="./js/main.js"></script>
     </body>
 </html> 
