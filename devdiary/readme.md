@@ -35,3 +35,13 @@ Completed this week:
 * Expanded the ```Critter``` class, adding new ```Monster``` types and a ```Food``` type.
 * Created a front page that provides some very basic information.
 * Implemented a first-draft information output box that gives the player info.
+
+## August 18, 2019 - The Fourth Week of Development
+This is the week where I had to finally add a way to reach the end of the game. Although I did not expect to be able to implement Firebase (for storage of high score data), it was actually pretty straightforward once I wrapped my head around it. The full entry can be found [here](./part03.md).
+
+![Image of the Fourth Screenshot](./image/pt4_screenshot.png)
+
+Completed this week:
+* Added an End State (out of energy).
+* Created multiple game screens (Game Over, High Score).
+* Implemented Firestore to store high score data.

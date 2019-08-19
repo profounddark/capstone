@@ -29,8 +29,17 @@ body
     margin: .5rem auto;
 }
 
+.gamescreen input
+{
+    display: block;
+    width: 80%;
+    margin: 1rem auto;
+    font-size: 1.5rem;
+}
+
 .gamescreen button
 {
+    width: 80%;
     display: block;
     padding: .5rem;
     background-color: black;
@@ -194,10 +203,16 @@ td:last-child
         height: 640px;
     }
 
+    .gamescreen input
+    {
+        font-size: 2rem;
+        width: 35%;
+    }
+
     .gamescreen button
     {
-        display: initial;
-        margin: .25rem;
+        width: 35%;
+
     }
 
     table

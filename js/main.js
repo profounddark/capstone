@@ -14,7 +14,7 @@ var firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 var firestore = firebase.firestore();
 
-const docRef = firestore.collection("gamedata").doc("highscores");
+const collectionRef = firestore.collection("highscores");
 const scoreTable = document.getElementById('highscoretable');
 let currentLevel;
 
@@ -37,6 +37,15 @@ class GameState
 
         this.infoTracker.innerHTML = "";
         this.updateInfo('Welcome to Capstone Adventure!');
+    }
+
+    get score()
+    {
+        return this.playerScore;
+    }
+    get energy()
+    {
+        return this.playerEnergy;
     }
 
     switchScreens(current, next)
@@ -116,22 +125,34 @@ function setGameControls()
         document.addEventListener("keydown", event =>{
             if (event.key == "ArrowUp" || event.key == "w")
             {
-                event.preventDefault();
+                if (event.key =="ArrowUp")
+                {
+                    event.preventDefault();
+                }
                 processTurn("N");
             }
             else if (event.key == "ArrowDown" || event.key == "s")
             {
-                event.preventDefault();
+                if (event.key =="ArrowDown")
+                {
+                    event.preventDefault();
+                }
                 processTurn("S");
             }
             else if (event.key == "ArrowRight" || event.key == "d")
             {
-                event.preventDefault();
+                if (event.key =="ArrowRight")
+                {
+                    event.preventDefault();
+                }
                 processTurn("E");
             }
             else if (event.key == "ArrowLeft" || event.key == "a")
             {
-                event.preventDefault();
+                if (event.key =="ArrowLeft")
+                {
+                    event.preventDefault();
+                }
                 processTurn("W");
             }
         });
@@ -145,7 +166,6 @@ function processTurn(direction)
 
     if(!mainGame.acceptInput)
     {
-        console.log(mainGame.acceptInput);
         return;
     }
 
@@ -238,32 +258,44 @@ function loadLevel(newLevel)
         });
 }
 
-function addHighscore(playername, score)
+function addHighScore(newName, newScore)
 {
-    
+    let newData = new Object();
+    newData.playername = newName;
+    newData.score = newScore;
+    newData.timestamp = firebase.firestore.Timestamp.now();
+    collectionRef.add(newData)
+    .then(function(docRef){
+        console.log("Document written with ID: ", docRef.id);
+    })
+    .catch(function(error){
+        console.log("Error adding document: ", error);
+    });
 }
 
 function loadHighScores()
 {
-    docRef.get().then(function (doc) {
-        if (doc && doc.exists) {
-            let scoreData = doc.data().scores;
+    collectionRef.orderBy("score", "desc").limit(10)
+        .get()
+        .then(function(collections)
+        {
             scoreTable.innerHTML = "";
-            for (let i=0; i < 10; i++)
+            collections.forEach(function(doc)
             {
                 let newRow = document.createElement('tr');
                 let newName = document.createElement('td');
-                newName.innerText = scoreData[i].playername;
+                newName.innerText = doc.data().playername;
                 newRow.appendChild(newName);
                 let newScore = document.createElement('td');
-                newScore.innerText = scoreData[i].score;
+                newScore.innerText = doc.data().score;
                 newRow.appendChild(newScore);
                 scoreTable.appendChild(newRow);
-            }
-       }
-    }).catch(function(error){
-        console.log("Got an error: ", error);
-    });
+            });
+        })
+        .catch(function(error)
+        {
+            console.log("Error getting documents: ", error);
+        });
 }
 
 document.addEventListener("DOMContentLoaded", function(event)
@@ -285,6 +317,18 @@ document.addEventListener("DOMContentLoaded", function(event)
                     loadLevel('level01');
                 }
             });
+        });
+
+        document.getElementById('savebutton').addEventListener("mousedown", function(event)
+        {
+            let nameInput = document.getElementById('nameinput');
+            let playerName = nameInput.value;
+            nameInput.setAttribute('placeholder', playerName);
+            addHighScore(playerName, mainGame.score);
+            loadHighScores();
+            let destPage = event.target.getAttribute('destination');
+            let sourcePage = event.target.getAttribute('source');
+            mainGame.switchScreens(sourcePage, destPage);
         });
     });
 
