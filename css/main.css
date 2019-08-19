@@ -140,7 +140,22 @@ canvas
 }
 
 
+table
+{
+    width: 100%;
 
+}
+
+td
+{
+    padding: .5rem;
+    text-align:left;
+}
+
+td:last-child
+{
+    text-align: right;
+}
 
 
 @media screen and (min-width: 640px)
@@ -148,8 +163,8 @@ canvas
     .main
     {
         display: grid;
-        width: 90%;
-        grid-template-columns: 640px auto;
+        width: 1000px;
+        grid-template-columns: 640px 360px;
         grid-template-rows: 100px 540px;
         margin: 1rem auto;
     }
@@ -183,6 +198,12 @@ canvas
     {
         display: initial;
         margin: .25rem;
+    }
+
+    table
+    {
+        width:800;
+        margin: 0 auto;
     }
 
 }
