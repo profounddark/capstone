@@ -224,7 +224,26 @@ function loadLevel(newLevel)
 
 document.addEventListener("DOMContentLoaded", function(event)
     {
-        
+        setGameControls();
+        mainGame = new GameState();
+
+        let buttonList = document.querySelectorAll('#screenbutton');
+        buttonList.forEach(function(button)
+        {
+            button.addEventListener("mousedown", function(event)
+            {
+                let destPage = event.target.getAttribute('destination');
+                let sourcePage = event.target.getAttribute('source');
+                mainGame.switchScreens(sourcePage, destPage);
+
+                if (destPage == 'levelscreen')
+                {
+                    loadLevel('level01');
+                }
+            });
+        });
+    });
+/*
         document.getElementById('startbutton').addEventListener("mousedown", function(event)
         {
             mainGame = new GameState();
@@ -238,13 +257,13 @@ document.addEventListener("DOMContentLoaded", function(event)
         document.getElementById('restartbutton').addEventListener("mousedown", function(event)
         {
             mainGame = new GameState();
-            mainGame.switchScreens('gameoverscreen', 'levelscreen');
+            mainGame.switchScreens('gameoverscreen', 'titlescreen');
 
             loadLevel('level01');
 
         });
     }
-);
+    */
 
 
 

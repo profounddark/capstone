@@ -23,7 +23,7 @@
     <body>
         <script type="module" src="./js/main.js"></script>
         
-        <div class="start active" id="titlescreen">
+        <div class="gamescreen active" id="titlescreen">
             <h1>Capstone! Adventure</h1>
             <p>How long can you survive?</p>
             <p>Collect these treasures
@@ -34,16 +34,36 @@
             <img src="./images/foods.png">
             to boost your ENERGY!</p>
 
-            <button class="start" id="startbutton">Start Game</button>
+            <button id="screenbutton" source="titlescreen" destination="levelscreen">Start Game</button>
+            <button id="screenbutton" source="titlescreen" destination="highscorescreen">View High Scores</button>
 
         </div>
         
-        <div class="start inactive" id="gameoverscreen">
+        <div class="gamescreen inactive" id="gameoverscreen">
             <h1>Game Over</h1>
             <p>You have run out of energy!</p>
             <p>You ended the game with <span id="finalpoints">POINTS</span> points!</p>
 
-            <button class="start" id="restartbutton">Restart Game</button>
+            <button id="screenbutton" source="gameoverscreen" destination="titlescreen">Back to Title</button>
+
+        </div>
+
+        <div class="gamescreen inactive" id="highscorescreen">
+            <h1>High Scores</h1>
+            <table>
+                <tr><td>Andrew</td><td>1000</td></tr>
+                <tr><td>Andrew</td><td>900</td></tr>
+                <tr><td>Andrew</td><td>800</td></tr>
+                <tr><td>Andrew</td><td>700</td></tr>
+                <tr><td>Andrew</td><td>600</td></tr>
+                <tr><td>Andrew</td><td>500</td></tr>
+                <tr><td>Andrew</td><td>400</td></tr>
+                <tr><td>Andrew</td><td>300</td></tr>
+                <tr><td>Andrew</td><td>200</td></tr>
+                <tr><td>Andrew</td><td>100</td></tr>
+            </table>
+
+            <button id="screenbutton" source="highscorescreen" destination="titlescreen">Back to Title</button>
 
         </div>
 

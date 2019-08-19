@@ -9,19 +9,19 @@ body
 
 }
 
-.start
+.gamescreen
 {
     padding: 5%;
     
     text-align: center;
 }
 
-.start p
+.gamescreen p
 {
     margin-bottom: 3rem;
 }
 
-.start img
+.gamescreen img
 { 
     display: block;
     padding: 0;
@@ -29,16 +29,18 @@ body
     margin: .5rem auto;
 }
 
-.start button
+.gamescreen button
 {
-    padding: 1rem;
+    display: block;
+    padding: .5rem;
     background-color: black;
     color: white;
     border-color: white;
     font-size: 2rem;
+    margin: .5rem auto;
 }
 
-.start button:hover
+.gamescreen button:hover
 {
     color:black;
     background-color: white;
@@ -175,6 +177,12 @@ canvas
         grid-row: 1 / span 2;
         width: 640px;
         height: 640px;
+    }
+
+    .gamescreen button
+    {
+        display: initial;
+        margin: .25rem;
     }
 
 }
