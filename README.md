@@ -2,18 +2,18 @@
 
 This is an attempt to make a tile-based adventure/arcade web game. This game is being developed in HTML/CSS/JavaScript with no frameworks. The primary purpose of this endeavor is for me to learn more about using the HTML Canvas component to display graphics.
 
-Well, that, and it's the "capstone" to my Web Development Certificate.
+## Getting Started
+Clone the repo from Github. This is currently set up to run on Github Pages. If you clone the repo, you should modify the Firebase data in api.js to connect to your own Firebase project.
 
-## First Playable Prototype
+## Built With
+* HTML/CSS/JavaScript
+* Google Firebase
+  
+## Author
+* Andrew Asplund - [profounddark.games](https://profounddark.games/)
 
-The first playable prototype will feature a single, fixed map (sized 15x15). The player will move about the map, collecting treasures while trying to get to the exit square. Each space will lower the player's "energy" by one (thus, creating a time limit to the game). Each treasure will increase the player's score. Some treasures will increase the player's energy.
+## License
+This project is licensed under the MIT License. See the [LICENSE.md](./LICENSE.md) file for details.
 
-If the player reaches the exit, they will be moved to the next level (which, in this case, will be the same level).
+The tileset used in this project are based on the [1-Bit Asset Pack](https://kenney.nl/assets/bit-pack) by [Kenney](https://kenney.nl/). The original asset pack is released under [Creative Commons 1.0 Universal](https://creativecommons.org/publicdomain/zero/1.0/).
 
-## Current Status
-
-Displaying a single map is complete. On Desktop, the user can move the character about using the arrow keys or WASD. There is basic tile collision based on tile type; this means that the player will be unable to enter spaces that are marked as impassible. In addition, they will be unable to walk off of the edges of the map.
-
-### Upcoming Features (in development)
-* Tile Collision: The character will only be able to move into spaces of a certain type.
-* Mobile Controls: Adding buttons at the bottom of the screen (mobile only) that allows the player to move the character about.
